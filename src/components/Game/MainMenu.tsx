@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useGameStore } from '../../store/useGameStore';
 import { CLASSES } from '../../core/data/Classes';
-import { Swords, Scroll, Shield, Zap, Heart } from 'lucide-react';
+import { Swords, Scroll, Zap, Heart } from 'lucide-react';
 
 export const MainMenu: React.FC = () => {
     const { initializeGame, startBattle } = useGameStore();

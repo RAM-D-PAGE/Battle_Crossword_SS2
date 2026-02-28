@@ -2,7 +2,6 @@ import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
 import { useSettingsStore, FontSize, Difficulty } from '../../store/useSettingsStore';
-import { Language } from '../../core/i18n';
 import { t } from '../../core/i18n';
 
 interface SettingsModalProps {

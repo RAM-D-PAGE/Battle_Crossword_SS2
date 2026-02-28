@@ -4,7 +4,7 @@ import { useGameStore } from '../../store/useGameStore';
 import { t } from '../../core/i18n';
 
 export const GameOverOverlay: React.FC = () => {
-    const { gameStatus, score, currentLevel, nextLevel, resetGame } = useGameStore();
+    const { gameStatus, score, nextLevel, resetGame } = useGameStore();
 
     if (gameStatus !== 'victory' && gameStatus !== 'defeat') return null;
 

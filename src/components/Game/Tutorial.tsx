@@ -9,7 +9,7 @@ interface TutorialProps {
     totalSteps: number;
 }
 
-const STEP_HIGHLIGHTS: Record<number, string> = {
+const _STEP_HIGHLIGHTS: Record<number, string> = {
     0: 'hand',    // Highlight the hand area
     1: 'grid',    // Highlight the grid
     2: 'cast',    // Highlight cast button

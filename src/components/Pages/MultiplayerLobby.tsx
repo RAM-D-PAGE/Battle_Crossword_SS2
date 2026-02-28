@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, Users, Plus, LogIn, Globe, Lock, Wifi, WifiOff, Crown, Swords } from 'lucide-react';
+import { ArrowLeft, Users, Plus, LogIn, Globe, Lock, Wifi, Crown, Swords } from 'lucide-react';
 import { t } from '../../core/i18n';
 
 interface MultiplayerLobbyProps {
@@ -99,8 +99,8 @@ export const MultiplayerLobby: React.FC<MultiplayerLobbyProps> = ({ onBack }) =>
                                 >
                                     <div className="flex items-center gap-3">
                                         <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-lg ${room.status === 'waiting'
-                                                ? 'bg-emerald-500/20 text-emerald-400'
-                                                : 'bg-red-500/20 text-red-400'
+                                            ? 'bg-emerald-500/20 text-emerald-400'
+                                            : 'bg-red-500/20 text-red-400'
                                             }`}>
                                             {room.status === 'waiting' ? <Wifi size={18} /> : <Swords size={18} />}
                                         </div>

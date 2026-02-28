@@ -1,0 +1,29 @@
+{
+    "name": "Battle CrossWord",
+    "short_name": "BCW",
+    "description": "A crossword RPG battle game — spell words to defeat monsters!",
+    "start_url": "/",
+    "display": "standalone",
+    "orientation": "portrait",
+    "background_color": "#09090b",
+    "theme_color": "#6366f1",
+    "icons": [
+        {
+            "src": "/icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "/icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ],
+    "categories": [
+        "games",
+        "education"
+    ],
+    "lang": "en"
+}

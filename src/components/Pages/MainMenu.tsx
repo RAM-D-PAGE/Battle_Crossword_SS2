@@ -1,7 +1,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Sparkles, Crown, Swords, Users, BookOpen, Trophy, Settings, ShoppingBag, Package, Map, Award } from 'lucide-react';
+import { Sparkles, Crown, Swords, Users, BookOpen, Trophy, Settings, ShoppingBag, Package, Map, Award, Heart } from 'lucide-react';
 import { useGameStore } from '../../store/useGameStore';
+import { useSettingsStore } from '../../store/useSettingsStore';
 import { SettingsModal } from '../Game/SettingsModal';
 import { t } from '../../core/i18n';
 import { useState } from 'react';
@@ -11,7 +12,8 @@ interface MainMenuProps {
 }
 
 export const MainMenu: React.FC<MainMenuProps> = ({ onNavigate }) => {
-    const { playerClass, currentLevel, continueGame } = useGameStore();
+    const { playerClass, currentLevel, continueGame, startZenMode } = useGameStore();
+    const { elderlyMode, enableElderlyMode, disableElderlyMode } = useSettingsStore();
     const [showSettings, setShowSettings] = useState(false);
 
     const menuButtons = [
@@ -87,6 +89,15 @@ export const MainMenu: React.FC<MainMenuProps> = ({ onNavigate }) => {
             glow: 'rgba(251,191,36,0.3)',
             action: () => onNavigate('achievements'),
         },
+        {
+            id: 'zen',
+            icon: <Heart size={22} />,
+            label: '🧘 Zen Mode',
+            desc: 'ฝึกสมอง ไม่มีศัตรู',
+            color: 'from-teal-400 to-cyan-500',
+            glow: 'rgba(45,212,191,0.3)',
+            action: () => startZenMode(),
+        },
     ];
 
     return (
@@ -119,16 +130,34 @@ export const MainMenu: React.FC<MainMenuProps> = ({ onNavigate }) => {
                 ))}
             </div>
 
-            {/* ── Settings Button ── */}
-            <motion.button
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.3 }}
-                onClick={() => setShowSettings(true)}
-                className="absolute top-4 right-4 z-20 p-3 glass-card rounded-xl text-zinc-400 hover:text-white hover:border-indigo-500/40 transition-all"
-            >
-                <Settings size={20} />
-            </motion.button>
+            {/* ── Top-right buttons ── */}
+            <div className="absolute top-4 right-4 z-20 flex gap-2">
+                {/* Elderly Mode Toggle */}
+                <motion.button
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.2 }}
+                    onClick={() => elderlyMode ? disableElderlyMode() : enableElderlyMode()}
+                    className={`p-3 rounded-xl transition-all text-lg ${elderlyMode
+                        ? 'bg-emerald-500/20 border-2 border-emerald-500 shadow-[0_0_20px_rgba(16,185,129,0.3)]'
+                        : 'glass-card text-zinc-400 hover:text-white hover:border-emerald-500/40'
+                        }`}
+                    title={elderlyMode ? 'ปิดโหมดผู้สูงอายุ' : 'เปิดโหมดผู้สูงอายุ'}
+                >
+                    👴
+                </motion.button>
+
+                {/* Settings Button */}
+                <motion.button
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.3 }}
+                    onClick={() => setShowSettings(true)}
+                    className="p-3 glass-card rounded-xl text-zinc-400 hover:text-white hover:border-indigo-500/40 transition-all"
+                >
+                    <Settings size={20} />
+                </motion.button>
+            </div>
 
             {/* ── Title ── */}
             <motion.div

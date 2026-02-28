@@ -25,7 +25,7 @@ interface GameState {
 
     turn: number;
     isPlayerTurn: boolean;
-    gameStatus: 'idle' | 'battle' | 'victory' | 'defeat';
+    gameStatus: 'idle' | 'battle' | 'victory' | 'defeat' | 'zen';
     skillCooldowns: Record<string, number>;
     equippedSkills: string[];
     playerClass?: ClassData;
@@ -69,6 +69,7 @@ interface GameState {
     returnTileToHand: (tileId: string) => void;
 
     startBattle: (enemyId: string) => void;
+    startZenMode: () => void;
     endTurn: () => void;
     damageEnemy: (amount: number) => void;
     damagePlayer: (amount: number) => void;
@@ -250,6 +251,28 @@ export const useGameStore = create<GameState>()(
                 });
             },
 
+            // ═══ ZEN / PRACTICE MODE (no enemies, just spell words) ═══
+            startZenMode: () => {
+                set({
+                    gameStatus: 'zen',
+                    playerHp: 999,
+                    playerMaxHp: 999,
+                    playerMp: 999,
+                    playerMaxMp: 999,
+                    enemyId: null,
+                    enemyHp: 0,
+                    enemyMaxHp: 0,
+                    turn: 1,
+                    isPlayerTurn: true,
+                    hand: TileSystem.fillHand([], 9, 2),
+                    grid: Array(7).fill(null),
+                    score: 0,
+                    combo: 0,
+                    discardsRemaining: 99,
+                    statusEffects: [],
+                });
+            },
+
             nextLevel: () => {
                 const state = get();
                 const nextIndex = state.currentEnemyIndex + 1;
@@ -294,6 +317,11 @@ export const useGameStore = create<GameState>()(
             })),
 
             damageEnemy: (amount) => set((state) => {
+                // Zen mode: just add score, no enemy to defeat
+                if (state.gameStatus === 'zen') {
+                    return { score: state.score + amount };
+                }
+
                 const newHp = Math.max(0, state.enemyHp - amount);
                 const justDefeated = newHp === 0 && state.enemyHp > 0;
 

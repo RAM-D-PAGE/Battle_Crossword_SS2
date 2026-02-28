@@ -92,7 +92,7 @@ function App() {
 
     // Sync gameStatus with page routing
     useEffect(() => {
-        if (gameStatus === 'battle' || gameStatus === 'victory' || gameStatus === 'defeat') {
+        if (gameStatus === 'battle' || gameStatus === 'victory' || gameStatus === 'defeat' || gameStatus === 'zen') {
             setCurrentPage('battle');
         } else if (gameStatus === 'idle' && currentPage === 'battle') {
             setCurrentPage('mainMenu');

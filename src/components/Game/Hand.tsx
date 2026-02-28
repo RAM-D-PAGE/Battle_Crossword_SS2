@@ -41,13 +41,14 @@ export const Hand: React.FC = () => {
                                 isWild={tile.isWild}
                                 rarity={tile.rarity}
                             />
-                            {/* Discard button - appears on hover */}
+                            {/* Discard button - always visible when available */}
                             {discardsRemaining > 0 && (
                                 <button
                                     onClick={(e) => { e.stopPropagation(); handleDiscard(tile.id); }}
-                                    className="absolute -top-2 -right-2 w-5 h-5 bg-red-500 hover:bg-red-400 text-white text-[9px] font-bold rounded-full
-                                             opacity-0 group-hover:opacity-100 transition-opacity shadow-lg z-20
-                                             flex items-center justify-center"
+                                    className="absolute -top-3 -right-3 w-7 h-7 md:w-8 md:h-8 min-w-[28px] min-h-[28px]
+                                             bg-red-500 hover:bg-red-400 active:bg-red-600 text-white text-xs font-bold rounded-full
+                                             opacity-60 group-hover:opacity-100 transition-all shadow-lg z-20
+                                             flex items-center justify-center touch-manipulation"
                                     title="Discard tile"
                                 >
                                     ✕

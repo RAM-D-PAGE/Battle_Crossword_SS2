@@ -19,6 +19,7 @@ interface SettingsState {
     screenShakeEnabled: boolean;
     autoSort: boolean;
     showTutorial: boolean;
+    elderlyMode: boolean;
 
     // Actions
     setFontSize: (size: FontSize) => void;
@@ -30,6 +31,8 @@ interface SettingsState {
     setScreenShake: (enabled: boolean) => void;
     setAutoSort: (enabled: boolean) => void;
     setShowTutorial: (show: boolean) => void;
+    enableElderlyMode: () => void;
+    disableElderlyMode: () => void;
 }
 
 // ═══════════════════════════════════════
@@ -119,12 +122,13 @@ export const useSettingsStore = create<SettingsState>()(
             fontSize: 'normal',
             timerEnabled: true,
             difficulty: 'normal',
-            language: 'en',
+            language: 'th',
             highContrast: false,
             tapToPlace: false,
             screenShakeEnabled: true,
             autoSort: false,
             showTutorial: true,
+            elderlyMode: false,
 
             setFontSize: (size) => set({ fontSize: size }),
             setTimerEnabled: (enabled) => set({ timerEnabled: enabled }),
@@ -138,6 +142,26 @@ export const useSettingsStore = create<SettingsState>()(
             setScreenShake: (enabled) => set({ screenShakeEnabled: enabled }),
             setAutoSort: (enabled) => set({ autoSort: enabled }),
             setShowTutorial: (show) => set({ showTutorial: show }),
+            enableElderlyMode: () => set({
+                elderlyMode: true,
+                fontSize: 'xlarge',
+                highContrast: true,
+                difficulty: 'easy',
+                timerEnabled: false,
+                tapToPlace: true,
+                screenShakeEnabled: false,
+                autoSort: true,
+            }),
+            disableElderlyMode: () => set({
+                elderlyMode: false,
+                fontSize: 'normal',
+                highContrast: false,
+                difficulty: 'normal',
+                timerEnabled: true,
+                tapToPlace: false,
+                screenShakeEnabled: true,
+                autoSort: false,
+            }),
         }),
         {
             name: 'battle-crossword-settings',

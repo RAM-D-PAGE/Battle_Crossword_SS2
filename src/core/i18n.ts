@@ -536,7 +536,7 @@ const translations: Record<Language, TranslationKeys> = {
 // Export function
 // ═══════════════════════════════════════
 
-let currentLanguage: Language = 'en';
+let currentLanguage: Language = 'th';
 
 export function setLanguage(lang: Language) {
     currentLanguage = lang;

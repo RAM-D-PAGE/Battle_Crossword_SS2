@@ -18,41 +18,57 @@ export const BattleHUD: React.FC<BattleHUDProps> = ({ timer }) => {
         enemyHp, enemyMaxHp, enemyId,
         isPlayerTurn, playerClass, score, currentLevel,
         gold, playerLevel, playerXp, xpToNextLevel,
-        combo, statusEffects
+        combo, statusEffects, gameStatus
     } = useGameStore();
 
     const { timerEnabled } = useSettingsStore();
     const currentEnemy = ENEMIES.find(e => e.id === enemyId);
+    const isZen = gameStatus === 'zen';
 
     return (
         <div className="w-full max-w-2xl px-2 flex flex-col gap-3">
-            {/* Enemy HUD */}
-            <div className="glass-card rounded-2xl p-4">
-                <div className="flex justify-between items-center mb-2">
-                    <div className="flex items-center gap-2">
-                        <div className="w-8 h-8 rounded-lg bg-red-500/20 flex items-center justify-center">
-                            <Skull size={18} className="text-red-400" />
-                        </div>
+            {/* Enemy HUD or Zen Header */}
+            {isZen ? (
+                <div className="glass-card rounded-2xl p-4 text-center">
+                    <div className="flex items-center justify-center gap-3">
+                        <span className="text-3xl">🧘</span>
                         <div>
-                            <div className="flex items-center gap-2">
-                                <span className="text-xs font-mono text-zinc-500 bg-zinc-800/80 px-2 py-0.5 rounded">{t('menu.level')}{currentLevel}</span>
-                                <span className="font-bold text-lg text-white">{currentEnemy?.name || 'Unknown'}</span>
-                            </div>
-                            <p className="text-[10px] text-zinc-500 -mt-0.5">{currentEnemy?.description || ''}</p>
+                            <span className="font-bold text-lg text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-cyan-400">
+                                Zen Mode
+                            </span>
+                            <p className="text-[10px] text-zinc-500">ฝึกสมอง สะกดคำอย่างอิสระ</p>
                         </div>
                     </div>
-                    <span className="font-mono text-sm text-red-300 bg-red-500/10 px-3 py-1 rounded-lg">
-                        {enemyHp}/{enemyMaxHp}
-                    </span>
+                    <div className="mt-2 text-2xl font-black text-amber-400 font-mono">{score} pts</div>
                 </div>
-                <div className="w-full h-4 bar-track rounded-full overflow-hidden">
-                    <motion.div
-                        className="h-full bar-hp-fill rounded-full"
-                        animate={{ width: `${Pct(enemyHp, enemyMaxHp)}%` }}
-                        transition={{ type: 'spring', stiffness: 60, damping: 15 }}
-                    />
+            ) : (
+                <div className="glass-card rounded-2xl p-4">
+                    <div className="flex justify-between items-center mb-2">
+                        <div className="flex items-center gap-2">
+                            <div className="w-8 h-8 rounded-lg bg-red-500/20 flex items-center justify-center">
+                                <Skull size={18} className="text-red-400" />
+                            </div>
+                            <div>
+                                <div className="flex items-center gap-2">
+                                    <span className="text-xs font-mono text-zinc-500 bg-zinc-800/80 px-2 py-0.5 rounded">{t('menu.level')}{currentLevel}</span>
+                                    <span className="font-bold text-lg text-white">{currentEnemy?.name || 'Unknown'}</span>
+                                </div>
+                                <p className="text-[10px] text-zinc-500 -mt-0.5">{currentEnemy?.description || ''}</p>
+                            </div>
+                        </div>
+                        <span className="font-mono text-sm text-red-300 bg-red-500/10 px-3 py-1 rounded-lg">
+                            {enemyHp}/{enemyMaxHp}
+                        </span>
+                    </div>
+                    <div className="w-full h-4 bar-track rounded-full overflow-hidden">
+                        <motion.div
+                            className="h-full bar-hp-fill rounded-full"
+                            animate={{ width: `${Pct(enemyHp, enemyMaxHp)}%` }}
+                            transition={{ type: 'spring', stiffness: 60, damping: 15 }}
+                        />
+                    </div>
                 </div>
-            </div>
+            )}
 
             {/* Turn Indicator + Timer */}
             <div className="flex justify-center items-center gap-3">
@@ -92,8 +108,8 @@ export const BattleHUD: React.FC<BattleHUDProps> = ({ timer }) => {
                     )}
                     {statusEffects.map((e, i) => (
                         <span key={i} className={`px-3 py-1 rounded-full text-[10px] font-bold ${e.type === 'burn' ? 'bg-red-500/20 text-red-300' :
-                                e.type === 'freeze' ? 'bg-cyan-500/20 text-cyan-300' :
-                                    'bg-green-500/20 text-green-300'
+                            e.type === 'freeze' ? 'bg-cyan-500/20 text-cyan-300' :
+                                'bg-green-500/20 text-green-300'
                             }`}>
                             {e.type === 'burn' ? '🔥' : e.type === 'freeze' ? '❄️' : '☠️'} {e.turnsLeft}t
                         </span>

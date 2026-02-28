@@ -1,0 +1,400 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ═══════════════════════════════════════ */
+/* CSS Custom Properties (Dynamic Sizing) */
+/* ═══════════════════════════════════════ */
+:root {
+  font-family: "Inter", system-ui, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color-scheme: dark;
+  color: rgba(255, 255, 255, 0.95);
+  background-color: #0a0a0f;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Default sizes (normal) */
+  --font-xs: 9px;
+  --font-sm: 12px;
+  --font-base: 14px;
+  --font-lg: 16px;
+  --font-xl: 20px;
+  --font-2xl: 24px;
+  --font-3xl: 30px;
+  --tile-size: 56px;
+  --tile-size-md: 64px;
+  --slot-size: 56px;
+  --slot-size-md: 72px;
+  --skill-size: 56px;
+  --skill-size-md: 64px;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+/* ═══════════════════════════════════════ */
+/* Custom Scrollbar                       */
+/* ═══════════════════════════════════════ */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+
+/* ═══════════════════════════════════════ */
+/* Animated Background                    */
+/* ═══════════════════════════════════════ */
+.game-bg {
+  background:
+    radial-gradient(
+      ellipse at 20% 50%,
+      rgba(99, 102, 241, 0.08) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      ellipse at 80% 20%,
+      rgba(139, 92, 246, 0.06) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      ellipse at 50% 80%,
+      rgba(236, 72, 153, 0.04) 0%,
+      transparent 50%
+    ),
+    linear-gradient(180deg, #0a0a12 0%, #0f0f1a 50%, #0a0a12 100%);
+}
+
+/* ═══════════════════════════════════════ */
+/* Glass Card                             */
+/* ═══════════════════════════════════════ */
+.glass-card {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+/* ═══════════════════════════════════════ */
+/* Tile Styles                            */
+/* ═══════════════════════════════════════ */
+.tile-base {
+  background: linear-gradient(145deg, #e8e0ff 0%, #c4b5fd 40%, #a78bfa 100%);
+  border: 2px solid rgba(167, 139, 250, 0.5);
+  box-shadow:
+    0 4px 0 #7c3aed,
+    0 6px 12px rgba(0, 0, 0, 0.3),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.1),
+    inset 0 2px 4px rgba(255, 255, 255, 0.4);
+  transition: all 0.15s ease;
+}
+
+.tile-base:hover {
+  box-shadow:
+    0 6px 0 #7c3aed,
+    0 8px 20px rgba(124, 58, 237, 0.4),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.1),
+    inset 0 2px 4px rgba(255, 255, 255, 0.4);
+  transform: translateY(-2px);
+}
+
+.tile-base:active {
+  box-shadow:
+    0 1px 0 #7c3aed,
+    0 2px 4px rgba(0, 0, 0, 0.2);
+  transform: translateY(3px);
+}
+
+/* ═══════════════════════════════════════ */
+/* Grid Slot                              */
+/* ═══════════════════════════════════════ */
+.grid-slot {
+  background: rgba(255, 255, 255, 0.02);
+  border: 2px dashed rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  transition: all 0.2s ease;
+}
+
+.grid-slot-hover {
+  background: rgba(99, 102, 241, 0.15);
+  border-color: rgba(99, 102, 241, 0.5);
+  box-shadow: 0 0 20px rgba(99, 102, 241, 0.2);
+}
+
+.grid-slot-filled {
+  background: rgba(99, 102, 241, 0.08);
+  border: 2px solid rgba(99, 102, 241, 0.2);
+  border-style: solid;
+}
+
+/* ═══════════════════════════════════════ */
+/* Skill Button                           */
+/* ═══════════════════════════════════════ */
+.skill-btn {
+  background: linear-gradient(
+    180deg,
+    rgba(30, 30, 50, 0.9) 0%,
+    rgba(20, 20, 35, 0.95) 100%
+  );
+  border: 1.5px solid rgba(255, 255, 255, 0.08);
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  transition: all 0.2s ease;
+}
+
+.skill-btn:hover:not(:disabled) {
+  border-color: rgba(99, 102, 241, 0.5);
+  box-shadow:
+    0 4px 20px rgba(99, 102, 241, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+.skill-btn:active:not(:disabled) {
+  transform: translateY(1px);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* ═══════════════════════════════════════ */
+/* HP / MP Bars                           */
+/* ═══════════════════════════════════════ */
+.bar-track {
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.bar-hp-fill {
+  background: linear-gradient(90deg, #ef4444, #f97316, #ef4444);
+  background-size: 200% 100%;
+  animation: bar-shimmer 3s ease-in-out infinite;
+  box-shadow: 0 0 8px rgba(239, 68, 68, 0.4);
+}
+
+.bar-player-hp-fill {
+  background: linear-gradient(90deg, #3b82f6, #06b6d4, #3b82f6);
+  background-size: 200% 100%;
+  animation: bar-shimmer 3s ease-in-out infinite;
+  box-shadow: 0 0 8px rgba(59, 130, 246, 0.4);
+}
+
+.bar-mp-fill {
+  background: linear-gradient(90deg, #8b5cf6, #d946ef, #8b5cf6);
+  background-size: 200% 100%;
+  animation: bar-shimmer 3s ease-in-out infinite;
+  box-shadow: 0 0 8px rgba(139, 92, 246, 0.3);
+}
+
+@keyframes bar-shimmer {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* ═══════════════════════════════════════ */
+/* Action Button                          */
+/* ═══════════════════════════════════════ */
+.btn-cast {
+  background: linear-gradient(180deg, #6366f1 0%, #4338ca 50%, #3730a3 100%);
+  border: none;
+  border-bottom: 4px solid #1e1b4b;
+  box-shadow:
+    0 0 20px rgba(99, 102, 241, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  transition: all 0.15s ease;
+}
+
+.btn-cast:hover:not(:disabled) {
+  background: linear-gradient(180deg, #818cf8 0%, #6366f1 50%, #4338ca 100%);
+  box-shadow:
+    0 0 30px rgba(99, 102, 241, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
+  border-bottom-width: 5px;
+}
+
+.btn-cast:active:not(:disabled) {
+  transform: translateY(3px);
+  border-bottom-width: 1px;
+  box-shadow: 0 0 10px rgba(99, 102, 241, 0.2);
+}
+
+.btn-cast:disabled {
+  background: linear-gradient(180deg, #27272a 0%, #18181b 100%);
+  border-bottom-color: #09090b;
+  box-shadow: none;
+  color: #52525b;
+}
+
+/* ═══════════════════════════════════════ */
+/* Title Animation                        */
+/* ═══════════════════════════════════════ */
+.title-glow {
+  animation: title-pulse 2s ease-in-out infinite alternate;
+}
+
+@keyframes title-pulse {
+  from {
+    filter: drop-shadow(0 0 20px rgba(239, 68, 68, 0.4))
+      drop-shadow(0 0 60px rgba(239, 68, 68, 0.1));
+  }
+  to {
+    filter: drop-shadow(0 0 40px rgba(249, 115, 22, 0.6))
+      drop-shadow(0 0 80px rgba(249, 115, 22, 0.2));
+  }
+}
+
+/* ═══════════════════════════════════════ */
+/* Element Colors                         */
+/* ═══════════════════════════════════════ */
+.el-fire {
+  color: #f97316;
+  text-shadow: 0 0 8px rgba(249, 115, 22, 0.5);
+}
+.el-ice {
+  color: #22d3ee;
+  text-shadow: 0 0 8px rgba(34, 211, 238, 0.5);
+}
+.el-thunder {
+  color: #eab308;
+  text-shadow: 0 0 8px rgba(234, 179, 8, 0.5);
+}
+.el-nature {
+  color: #22c55e;
+  text-shadow: 0 0 8px rgba(34, 197, 94, 0.5);
+}
+.el-dark {
+  color: #a855f7;
+  text-shadow: 0 0 8px rgba(168, 85, 247, 0.5);
+}
+.el-light {
+  color: #fbbf24;
+  text-shadow: 0 0 8px rgba(251, 191, 36, 0.5);
+}
+.el-arcane {
+  color: #ec4899;
+  text-shadow: 0 0 8px rgba(236, 72, 153, 0.5);
+}
+
+/* ═══════════════════════════════════════ */
+/* Utility                                */
+/* ═══════════════════════════════════════ */
+.font-mono {
+  font-family: "JetBrains Mono", monospace;
+}
+
+/* ═══════════════════════════════════════ */
+/* HIGH CONTRAST MODE (Senior-Friendly)   */
+/* ═══════════════════════════════════════ */
+body.high-contrast {
+  color-scheme: light;
+}
+
+body.high-contrast .game-bg {
+  background: linear-gradient(180deg, #f5f5f5 0%, #e5e7eb 50%, #f5f5f5 100%) !important;
+  color: #1a1a1a;
+}
+
+body.high-contrast .glass-card {
+  background: rgba(255, 255, 255, 0.85);
+  border: 2px solid rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  color: #1a1a1a;
+}
+
+body.high-contrast .text-white,
+body.high-contrast .text-zinc-300,
+body.high-contrast .text-zinc-400,
+body.high-contrast .text-zinc-500 {
+  color: #1a1a1a !important;
+}
+
+body.high-contrast .text-indigo-300 {
+  color: #4338ca !important;
+}
+
+body.high-contrast .text-red-300,
+body.high-contrast .text-red-400 {
+  color: #dc2626 !important;
+}
+
+body.high-contrast .text-blue-300,
+body.high-contrast .text-blue-400 {
+  color: #2563eb !important;
+}
+
+body.high-contrast .text-purple-300 {
+  color: #7c3aed !important;
+}
+
+body.high-contrast .text-yellow-400,
+body.high-contrast .text-yellow-300 {
+  color: #d97706 !important;
+}
+
+body.high-contrast .bg-black\/60,
+body.high-contrast .bg-black\/80,
+body.high-contrast .bg-black\/85 {
+  background-color: rgba(0, 0, 0, 0.7) !important;
+}
+
+body.high-contrast .bar-track {
+  background: rgba(0, 0, 0, 0.15);
+  border-color: rgba(0, 0, 0, 0.2);
+}
+
+body.high-contrast .grid-slot {
+  background: rgba(0, 0, 0, 0.04);
+  border-color: rgba(0, 0, 0, 0.15);
+}
+
+body.high-contrast .grid-slot-filled {
+  background: rgba(99, 102, 241, 0.12);
+  border-color: rgba(99, 102, 241, 0.3);
+}
+
+body.high-contrast .skill-btn {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, rgba(240, 240, 245, 0.95) 100%);
+  border-color: rgba(0, 0, 0, 0.15);
+  color: #1a1a1a;
+}
+
+body.high-contrast .btn-cast {
+  background: linear-gradient(180deg, #4f46e5 0%, #4338ca 100%);
+  border-bottom-color: #312e81;
+}
+
+body.high-contrast .title-glow {
+  animation: none;
+  filter: none;
+}
+
+/* Ensure text on gradient tiles is always readable */
+body.high-contrast .text-indigo-900,
+body.high-contrast .text-amber-900,
+body.high-contrast .text-emerald-900 {
+  color: #000 !important;
+  font-weight: 900;
+}

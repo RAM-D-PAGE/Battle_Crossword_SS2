@@ -90,7 +90,7 @@ export const MainMenu: React.FC<MainMenuProps> = ({ onNavigate }) => {
     ];
 
     return (
-        <div className="game-bg h-[100svh] w-full flex flex-col items-center justify-center relative overflow-hidden">
+        <div className="game-bg min-h-[100svh] w-full flex flex-col items-center justify-start py-8 relative overflow-y-auto">
             {/* ── Animated Background Particles ── */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
                 {[...Array(12)].map((_, i) => (

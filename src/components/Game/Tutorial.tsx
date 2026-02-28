@@ -9,12 +9,6 @@ interface TutorialProps {
     totalSteps: number;
 }
 
-const _STEP_HIGHLIGHTS: Record<number, string> = {
-    0: 'hand',    // Highlight the hand area
-    1: 'grid',    // Highlight the grid
-    2: 'cast',    // Highlight cast button
-    3: 'skills',  // Highlight skills bar
-};
 
 export const Tutorial: React.FC<TutorialProps> = ({ step, onNext, onSkip, totalSteps }) => {
     const isLast = step >= totalSteps - 1;

@@ -492,7 +492,8 @@ export const useGameStore = create<GameState>()(
 
             continueGame: () => {
                 const state = get();
-                if (state.gameStatus === 'battle') {
+                if (state.playerClass && state.enemyId) {
+                    set({ gameStatus: 'battle' });
                     AudioManager.play('bgm_battle');
                 }
             },

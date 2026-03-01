@@ -74,8 +74,8 @@ export const MainMenu: React.FC<MainMenuProps> = ({ onNavigate }) => {
         {
             id: 'worldMap',
             icon: <Map size={22} />,
-            label: '🗺️ World Map',
-            desc: 'Explore chapters',
+            label: `🗺️ ${t('menu.worldMap')}`,
+            desc: t('menu.worldMapDesc'),
             color: 'from-rose-500 to-red-600',
             glow: 'rgba(244,63,94,0.3)',
             action: () => onNavigate('worldMap'),
@@ -83,8 +83,8 @@ export const MainMenu: React.FC<MainMenuProps> = ({ onNavigate }) => {
         {
             id: 'achievements',
             icon: <Award size={22} />,
-            label: '🏆 Achievements',
-            desc: 'Track your progress',
+            label: `🏆 ${t('menu.achievements')}`,
+            desc: t('menu.achievementsDesc'),
             color: 'from-amber-400 to-yellow-500',
             glow: 'rgba(251,191,36,0.3)',
             action: () => onNavigate('achievements'),
@@ -92,8 +92,8 @@ export const MainMenu: React.FC<MainMenuProps> = ({ onNavigate }) => {
         {
             id: 'zen',
             icon: <Heart size={22} />,
-            label: '🧘 Zen Mode',
-            desc: 'ฝึกสมอง ไม่มีศัตรู',
+            label: `🧘 ${t('menu.zenMode')}`,
+            desc: t('menu.zenModeDesc'),
             color: 'from-teal-400 to-cyan-500',
             glow: 'rgba(45,212,191,0.3)',
             action: () => startZenMode(),

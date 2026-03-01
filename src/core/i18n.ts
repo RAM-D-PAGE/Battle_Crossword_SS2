@@ -25,6 +25,12 @@ type TranslationKeys = {
     'menu.shopDesc': string;
     'menu.inventory': string;
     'menu.inventoryDesc': string;
+    'menu.worldMap': string;
+    'menu.worldMapDesc': string;
+    'menu.achievements': string;
+    'menu.achievementsDesc': string;
+    'menu.zenMode': string;
+    'menu.zenModeDesc': string;
 
     // Multiplayer
     'multi.subtitle': string;
@@ -93,6 +99,9 @@ type TranslationKeys = {
     'battle.shuffled': string;
     'battle.noTiles': string;
     'battle.autoSort': string;
+    'battle.comboLabel': string;
+    'battle.zenMode': string;
+    'battle.zenDesc': string;
 
     // Game Over
     'gameOver.victory': string;
@@ -141,7 +150,7 @@ type TranslationKeys = {
     'settings.fontSize': string;
     'settings.fontNormal': string;
     'settings.fontLarge': string;
-    'settings.fontXLarge': string;
+    'settings.fontXlarge': string;
     'settings.timer': string;
     'settings.timerOn': string;
     'settings.timerOff': string;
@@ -200,6 +209,15 @@ type TranslationKeys = {
     'preview.estimated': string;
     'preview.damage': string;
 
+    // Landing Screen
+    'landing.title': string;
+    'landing.practice': string;
+    'landing.practiceSub': string;
+    'landing.practiceDesc': string;
+    'landing.fullGame': string;
+    'landing.fullGameSub': string;
+    'landing.fullGameDesc': string;
+
 };
 
 const translations: Record<Language, TranslationKeys> = {
@@ -224,6 +242,12 @@ const translations: Record<Language, TranslationKeys> = {
         'menu.shopDesc': 'Buy skills & weapons',
         'menu.inventory': 'Inventory',
         'menu.inventoryDesc': 'Manage your loadout',
+        'menu.worldMap': 'World Map',
+        'menu.worldMapDesc': 'Explore regions and chapters',
+        'menu.achievements': 'Achievements',
+        'menu.achievementsDesc': 'Track your milestones',
+        'menu.zenMode': 'Zen Mode',
+        'menu.zenModeDesc': 'Word practice without enemies',
 
         // Multiplayer
         'multi.subtitle': 'Challenge players around the world',
@@ -292,6 +316,9 @@ const translations: Record<Language, TranslationKeys> = {
         'battle.shuffled': 'Shuffled!',
         'battle.noTiles': 'No tiles...',
         'battle.autoSort': 'Sort A-Z',
+        'battle.comboLabel': 'COMBO',
+        'battle.zenMode': 'Zen Mode',
+        'battle.zenDesc': 'Free word practice',
 
         // Game Over
         'gameOver.victory': 'VICTORY!',
@@ -330,7 +357,7 @@ const translations: Record<Language, TranslationKeys> = {
         'settings.fontSize': 'Font Size',
         'settings.fontNormal': 'Normal',
         'settings.fontLarge': 'Large',
-        'settings.fontXLarge': 'X-Large',
+        'settings.fontXlarge': 'X-Large',
         'settings.timer': 'Timer',
         'settings.timerOn': 'On',
         'settings.timerOff': 'Off (Relaxed)',
@@ -400,6 +427,15 @@ const translations: Record<Language, TranslationKeys> = {
         // Damage Preview
         'preview.estimated': 'Est.',
         'preview.damage': 'DMG',
+
+        // Landing Screen
+        'landing.title': 'Select Game Mode',
+        'landing.practice': 'Brain Practice',
+        'landing.practiceSub': 'Elderly-Friendly',
+        'landing.practiceDesc': 'Simple words, no timer, relaxed play.',
+        'landing.fullGame': 'Battle CrossWord',
+        'landing.fullGameSub': 'Full Game Mode',
+        'landing.fullGameDesc': 'Magic, skills, and online battles.',
     },
 
     th: {
@@ -423,6 +459,12 @@ const translations: Record<Language, TranslationKeys> = {
         'menu.shopDesc': 'ซื้อสกิลและอาวุธ',
         'menu.inventory': 'ช่องเก็บของ',
         'menu.inventoryDesc': 'จัดการอุปกรณ์',
+        'menu.worldMap': 'แผนที่โลก',
+        'menu.worldMapDesc': 'สำรวจดินแดนและด่านต่างๆ',
+        'menu.achievements': 'ความสำเร็จ',
+        'menu.achievementsDesc': 'ติดตามผลงานของคุณ',
+        'menu.zenMode': 'โหมดผ่อนคลาย (Zen)',
+        'menu.zenModeDesc': 'ฝึกคำศัพท์ ไม่มีศัตรู',
 
         // Multiplayer
         'multi.subtitle': 'ท้าดวลผู้เล่นทั่วโลก',
@@ -491,6 +533,9 @@ const translations: Record<Language, TranslationKeys> = {
         'battle.shuffled': 'สับใหม่แล้ว!',
         'battle.noTiles': 'ไม่มีตัวอักษร...',
         'battle.autoSort': 'เรียง ก-ฮ',
+        'battle.comboLabel': 'คอมโบ',
+        'battle.zenMode': 'โหมดผ่อนคลาย (Zen)',
+        'battle.zenDesc': 'ฝึกสมอง สะกดคำอย่างอิสระ',
 
         // Game Over
         'gameOver.victory': 'ชัยชนะ!',
@@ -529,7 +574,7 @@ const translations: Record<Language, TranslationKeys> = {
         'settings.fontSize': 'ขนาดตัวอักษร',
         'settings.fontNormal': 'ปกติ',
         'settings.fontLarge': 'ใหญ่',
-        'settings.fontXLarge': 'ใหญ่มาก',
+        'settings.fontXlarge': 'ใหญ่มาก',
         'settings.timer': 'ตัวจับเวลา',
         'settings.timerOn': 'เปิด',
         'settings.timerOff': 'ปิด (ผ่อนคลาย)',
@@ -599,6 +644,15 @@ const translations: Record<Language, TranslationKeys> = {
         // Damage Preview
         'preview.estimated': 'ประมาณ',
         'preview.damage': 'ดาเมจ',
+
+        // Landing Screen
+        'landing.title': 'เลือกรูปแบบการเล่น',
+        'landing.practice': 'ฝึกสมอง',
+        'landing.practiceSub': 'โหมดผู้สูงอายุ',
+        'landing.practiceDesc': 'เล่นง่ายต่อคำศัพท์ ไม่จำกัดเวลา',
+        'landing.fullGame': 'เกม Battle CrossWord',
+        'landing.fullGameSub': 'เกมเต็มรูปแบบ',
+        'landing.fullGameDesc': 'เวทย์มนต์ ทักษะ เล่นออนไลน์',
     }
 };
 

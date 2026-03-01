@@ -41,9 +41,9 @@ export const BattleHUD: React.FC<BattleHUDProps> = ({ timer }) => {
                         <span className="text-2xl md:text-3xl">🧘</span>
                         <div>
                             <span className="font-bold text-base md:text-lg text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-cyan-400">
-                                Zen Mode
+                                {t('battle.zenMode')}
                             </span>
-                            <p className="text-[9px] md:text-[10px] text-zinc-500">ฝึกสมอง สะกดคำอย่างอิสระ</p>
+                            <p className="text-[9px] md:text-[10px] text-zinc-500">{t('battle.zenDesc')}</p>
                         </div>
                     </div>
                     <div className="mt-1 md:mt-2 text-xl md:text-2xl font-black text-amber-400 font-mono">{score} pts</div>
@@ -111,7 +111,7 @@ export const BattleHUD: React.FC<BattleHUDProps> = ({ timer }) => {
                             animate={{ scale: 1 }}
                             className="px-4 py-1 rounded-full bg-gradient-to-r from-orange-500 to-red-500 text-white text-xs font-black shadow-[0_0_12px_rgba(249,115,22,0.4)]"
                         >
-                            🔥 {combo}x COMBO
+                            🔥 {combo}x {t('battle.comboLabel')}
                         </motion.div>
                     )}
                     {statusEffects.map((e, i) => (

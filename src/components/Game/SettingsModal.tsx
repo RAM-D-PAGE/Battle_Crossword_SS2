@@ -107,12 +107,12 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ show, onClose }) =
                                     <ToggleButton
                                         active={settings.language === 'en'}
                                         onClick={() => settings.setLanguageSetting('en')}
-                                        label="🇬🇧 English"
+                                        label="EN English"
                                     />
                                     <ToggleButton
                                         active={settings.language === 'th'}
                                         onClick={() => settings.setLanguageSetting('th')}
-                                        label="🇹🇭 ไทย"
+                                        label="TH ไทย"
                                     />
                                 </div>
                             </div>

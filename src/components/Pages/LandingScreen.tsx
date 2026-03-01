@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { useSettingsStore } from '../../store/useSettingsStore';
 import { useGameStore } from '../../store/useGameStore';
 import { Gamepad2, Brain } from 'lucide-react';
+import { t } from '../../core/i18n';
 
 interface LandingScreenProps {
     onNavigate: (page: string) => void;
@@ -37,7 +38,7 @@ export const LandingScreen: React.FC<LandingScreenProps> = ({ onNavigate }) => {
                 animate={{ opacity: 1, y: 0 }}
                 className="text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400 mb-12 text-center"
             >
-                เลือกรูปแบบการเล่น
+                {t('landing.title')}
             </motion.h1>
 
             <div className="flex flex-col md:flex-row gap-6 w-full max-w-4xl z-10">
@@ -59,9 +60,9 @@ export const LandingScreen: React.FC<LandingScreenProps> = ({ onNavigate }) => {
                     </div>
 
                     <div className="text-center">
-                        <h2 className="text-3xl font-bold text-emerald-400 mb-3">ฝึกสมอง</h2>
-                        <p className="text-xl text-zinc-300">โหมดผู้สูงอายุ</p>
-                        <p className="text-sm text-emerald-500/80 mt-2">เล่นง่ายต่อคำศัพท์ ไม่จำกัดเวลา</p>
+                        <h2 className="text-3xl font-bold text-emerald-400 mb-3">{t('landing.practice')}</h2>
+                        <p className="text-xl text-zinc-300">{t('landing.practiceSub')}</p>
+                        <p className="text-sm text-emerald-500/80 mt-2">{t('landing.practiceDesc')}</p>
                     </div>
                 </motion.button>
 
@@ -82,9 +83,9 @@ export const LandingScreen: React.FC<LandingScreenProps> = ({ onNavigate }) => {
                     </div>
 
                     <div className="text-center">
-                        <h2 className="text-3xl font-bold text-indigo-400 mb-3">เกม Battle CrossWord</h2>
-                        <p className="text-xl text-zinc-300">เกมเต็มรูปแบบ</p>
-                        <p className="text-sm text-indigo-500/80 mt-2">เวทย์มนต์ ทักษะ เล่นออนไลน์</p>
+                        <h2 className="text-3xl font-bold text-indigo-400 mb-3">{t('landing.fullGame')}</h2>
+                        <p className="text-xl text-zinc-300">{t('landing.fullGameSub')}</p>
+                        <p className="text-sm text-indigo-500/80 mt-2">{t('landing.fullGameDesc')}</p>
                     </div>
                 </motion.button>
 

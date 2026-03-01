@@ -243,14 +243,16 @@ export const useGameStore = create<GameState>()(
                 const enemy = ENEMIES[enemyIndex !== -1 ? enemyIndex : 0];
                 if (!enemy) return;
 
+                const state = get();
+
                 set({
                     currentLevel: 1,
                     currentEnemyIndex: enemyIndex !== -1 ? enemyIndex : 0,
                     enemyId: enemy.id,
                     enemyHp: enemy.maxHp,
                     enemyMaxHp: enemy.maxHp,
-                    playerHp: 100,
-                    playerMp: 50,
+                    playerHp: state.playerMaxHp,
+                    playerMp: state.playerMaxMp,
                     turn: 1,
                     isPlayerTurn: true,
                     gameStatus: 'battle',
@@ -284,6 +286,7 @@ export const useGameStore = create<GameState>()(
 
             // ═══ MULTIPLAYER BATTLE ═══
             startMultiplayerBattle: (roomId: string, hostGoesFirst: boolean, myHp: number, opponentHp: number, opponentName: string) => {
+                const state = get();
                 set({
                     gameStatus: 'battle',
                     isMultiplayer: true,
@@ -291,9 +294,9 @@ export const useGameStore = create<GameState>()(
                     multiplayerOpponentName: opponentName,
                     playerHp: myHp,
                     playerMaxHp: myHp,
-                    playerMp: 50,
-                    playerMaxMp: 100,
-                    enemyId: 'player', // Fake ID for opponent
+                    playerMp: state.playerMaxMp, // Use class-specific Max MP
+                    playerMaxMp: state.playerMaxMp,
+                    enemyId: null, // Null to prevent monster dictionary lookups
                     enemyHp: opponentHp,
                     enemyMaxHp: opponentHp,
                     turn: 1,
@@ -481,7 +484,7 @@ export const useGameStore = create<GameState>()(
                     playerMaxHp: selectedClass.baseHp,
                     playerHp: selectedClass.baseHp,
                     playerMaxMp: selectedClass.baseMp,
-                    playerMp: 50,
+                    playerMp: selectedClass.baseMp, // Start with full MP
                     equippedSkills: selectedClass.startingSkills || [],
                     ownedSkills: [...(selectedClass.startingSkills || [])],
                 });
@@ -657,8 +660,11 @@ export const useGameStore = create<GameState>()(
                 localStorage.removeItem('battle-crossword-storage');
                 set({
                     gameStatus: 'idle',
-                    turn: 1,
+                    turn: 0,
                     playerHp: 100,
+                    playerMaxHp: 100,
+                    playerMp: 100,
+                    playerMaxMp: 100,
                     currentLevel: 1,
                     currentEnemyIndex: 0,
                     score: 0,

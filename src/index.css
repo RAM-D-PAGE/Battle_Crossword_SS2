@@ -27,7 +27,7 @@
   --font-xl: 20px;
   --font-2xl: 24px;
   --font-3xl: 30px;
-  
+
   --tile-size: 44px;
   --slot-size: 44px;
   --skill-size: 48px;
@@ -58,7 +58,6 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-  overflow: hidden;
 }
 
 /* ═══════════════════════════════════════ */
@@ -67,9 +66,11 @@ body {
 ::-webkit-scrollbar {
   width: 6px;
 }
+
 ::-webkit-scrollbar-track {
   background: transparent;
 }
+
 ::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, 0.1);
   border-radius: 10px;
@@ -80,21 +81,15 @@ body {
 /* ═══════════════════════════════════════ */
 .game-bg {
   background:
-    radial-gradient(
-      ellipse at 20% 50%,
+    radial-gradient(ellipse at 20% 50%,
       rgba(99, 102, 241, 0.08) 0%,
-      transparent 50%
-    ),
-    radial-gradient(
-      ellipse at 80% 20%,
+      transparent 50%),
+    radial-gradient(ellipse at 80% 20%,
       rgba(139, 92, 246, 0.06) 0%,
-      transparent 50%
-    ),
-    radial-gradient(
-      ellipse at 50% 80%,
+      transparent 50%),
+    radial-gradient(ellipse at 50% 80%,
       rgba(236, 72, 153, 0.04) 0%,
-      transparent 50%
-    ),
+      transparent 50%),
     linear-gradient(180deg, #0a0a12 0%, #0f0f1a 50%, #0a0a12 100%);
 }
 
@@ -166,11 +161,9 @@ body {
 /* Skill Button                           */
 /* ═══════════════════════════════════════ */
 .skill-btn {
-  background: linear-gradient(
-    180deg,
-    rgba(30, 30, 50, 0.9) 0%,
-    rgba(20, 20, 35, 0.95) 100%
-  );
+  background: linear-gradient(180deg,
+      rgba(30, 30, 50, 0.9) 0%,
+      rgba(20, 20, 35, 0.95) 100%);
   border: 1.5px solid rgba(255, 255, 255, 0.08);
   box-shadow:
     0 4px 12px rgba(0, 0, 0, 0.4),
@@ -222,10 +215,12 @@ body {
 }
 
 @keyframes bar-shimmer {
+
   0%,
   100% {
     background-position: 0% 50%;
   }
+
   50% {
     background-position: 100% 50%;
   }
@@ -276,12 +271,11 @@ body {
 
 @keyframes title-pulse {
   from {
-    filter: drop-shadow(0 0 20px rgba(239, 68, 68, 0.4))
-      drop-shadow(0 0 60px rgba(239, 68, 68, 0.1));
+    filter: drop-shadow(0 0 20px rgba(239, 68, 68, 0.4)) drop-shadow(0 0 60px rgba(239, 68, 68, 0.1));
   }
+
   to {
-    filter: drop-shadow(0 0 40px rgba(249, 115, 22, 0.6))
-      drop-shadow(0 0 80px rgba(249, 115, 22, 0.2));
+    filter: drop-shadow(0 0 40px rgba(249, 115, 22, 0.6)) drop-shadow(0 0 80px rgba(249, 115, 22, 0.2));
   }
 }
 
@@ -292,26 +286,32 @@ body {
   color: #f97316;
   text-shadow: 0 0 8px rgba(249, 115, 22, 0.5);
 }
+
 .el-ice {
   color: #22d3ee;
   text-shadow: 0 0 8px rgba(34, 211, 238, 0.5);
 }
+
 .el-thunder {
   color: #eab308;
   text-shadow: 0 0 8px rgba(234, 179, 8, 0.5);
 }
+
 .el-nature {
   color: #22c55e;
   text-shadow: 0 0 8px rgba(34, 197, 94, 0.5);
 }
+
 .el-dark {
   color: #a855f7;
   text-shadow: 0 0 8px rgba(168, 85, 247, 0.5);
 }
+
 .el-light {
   color: #fbbf24;
   text-shadow: 0 0 8px rgba(251, 191, 36, 0.5);
 }
+
 .el-arcane {
   color: #ec4899;
   text-shadow: 0 0 8px rgba(236, 72, 153, 0.5);

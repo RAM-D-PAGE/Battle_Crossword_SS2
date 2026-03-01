@@ -57,6 +57,29 @@ function saveToCache(word: string, valid: boolean): void {
         // localStorage full — ignore
     }
 }
+/**
+ * Checks if a word with wildcards (★) matches any word in our local dictionary.
+ */
+function matchWildcard(pattern: string): boolean {
+    const regexStr = '^' + pattern.replace(/★/g, '.') + '$';
+    const regex = new RegExp(regexStr, 'i');
+
+    // Check local WORD_SET first
+    for (const word of WORD_SET) {
+        if (word.length === pattern.length && regex.test(word)) {
+            return true;
+        }
+    }
+
+    // Also check memory cache (past successful API results)
+    for (const [cachedWord, isValid] of memoryCache.entries()) {
+        if (isValid && cachedWord.length === pattern.length && regex.test(cachedWord)) {
+            return true;
+        }
+    }
+
+    return false;
+}
 
 /**
  * Check if a word is valid using hybrid local + API approach.
@@ -87,7 +110,14 @@ export async function isValidWord(word: string): Promise<boolean> {
         return false;
     }
 
-    // 5) API fallback
+    // 5) Handle Wildcards (★) locally
+    if (lower.includes('★')) {
+        const isMatch = matchWildcard(lower);
+        memoryCache.set(lower, isMatch);
+        return isMatch;
+    }
+
+    // 6) API fallback
     try {
         const response = await fetch(`${API_URL}${encodeURIComponent(lower)}`, {
             signal: AbortSignal.timeout(1500) // 1.5 second timeout to prevent game completely hanging
@@ -128,6 +158,11 @@ export function isValidWordSync(word: string): boolean {
         memoryCache.set(lower, true);
         return true;
     }
+
+    if (lower.includes('★')) {
+        return matchWildcard(lower);
+    }
+
     return false;
 }
 

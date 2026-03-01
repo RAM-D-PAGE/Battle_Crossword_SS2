@@ -134,7 +134,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ show, onClose }) =
                                     </button>
                                 </div>
 
-                                {/* Full Game Mode (Inverted Elderly Mode) */}
+                                {/* Full Game Mode (Inverted logic for better UX) */}
                                 <div className="pt-2 border-t border-zinc-800">
                                     <div className="flex justify-between items-center mb-1">
                                         <span className="text-sm font-bold text-zinc-300">{t('settings.elderlyMode')}</span>
@@ -142,13 +142,13 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ show, onClose }) =
                                             onClick={() => {
                                                 if (settings.elderlyMode) {
                                                     settings.disableElderlyMode();
-                                                    useGameStore.getState().resetGame();
+                                                    // useGameStore.getState().resetGame(); // Optional: don't reset unless necessary
                                                     onClose();
                                                 } else {
                                                     settings.enableElderlyMode();
                                                 }
                                             }}
-                                            className={`w-14 h-8 rounded-full transition-all relative ${!settings.elderlyMode ? 'bg-indigo-500' : 'bg-zinc-700'}`}
+                                            className={`w-14 h-8 rounded-full transition-all relative ${!settings.elderlyMode ? 'bg-indigo-500 shadow-[0_0_15px_rgba(99,102,241,0.4)]' : 'bg-zinc-700'}`}
                                         >
                                             <motion.div
                                                 className="w-6 h-6 bg-white rounded-full absolute top-1"

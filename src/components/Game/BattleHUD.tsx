@@ -135,7 +135,7 @@ export const BattleHUD: React.FC<BattleHUDProps> = ({ timer }) => {
                         </div>
                         <div>
                             <div className="flex items-center gap-1.5 md:gap-2">
-                                <span className="font-black text-sm md:text-lg text-white">{(currentClass?.name as string) || pClassStr}</span>
+                                <span className="font-black text-sm md:text-lg text-white">{(currentClass?.name) || (typeof playerClass === 'string' ? playerClass : 'Player')}</span>
                                 <span className="text-[10px] md:text-xs font-mono text-indigo-300 bg-indigo-500/20 px-1.5 md:px-2 py-0 md:py-0.5 rounded">
                                     Lv.{playerLevel}
                                 </span>

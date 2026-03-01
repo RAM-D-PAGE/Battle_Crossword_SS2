@@ -64,7 +64,7 @@ function App() {
         placeTile, returnTileToHand,
         gameStatus, isPlayerTurn,
         popups, removePopup, resetGame,
-        hand
+        hand, isMultiplayer
     } = useGameStore();
 
     const {
@@ -101,6 +101,20 @@ function App() {
             setCurrentPage('mainMenu');
         }
     }, [gameStatus]);
+
+    // ══════════════════════════════════
+    // STAT SANITY CHECK (Clamping)
+    // ══════════════════════════════════
+    const { playerHp, playerMaxHp, playerMp, playerMaxMp } = useGameStore();
+    useEffect(() => {
+        if (playerHp > playerMaxHp || playerMp > playerMaxMp) {
+            console.log("Clamping stats:", { playerHp, playerMaxHp, playerMp, playerMaxMp });
+            useGameStore.setState({
+                playerHp: Math.min(playerHp, playerMaxHp),
+                playerMp: Math.min(playerMp, playerMaxMp)
+            });
+        }
+    }, [playerHp, playerMaxHp, playerMp, playerMaxMp]);
 
     // Keyboard controls (only during battle)
     useKeyboard(submitWord, showHelp, setShowHelp);
@@ -237,16 +251,19 @@ function App() {
     };
 
     // ══════════════════════════════════
-    // BATTLE SCREEN
+    // BATTLE SCREEN (Routing)
     // ══════════════════════════════════
-    if (useGameStore.getState().isMultiplayer && gameStatus === 'battle') {
-        return <MultiplayerBattle />;
+    if (currentPage === 'battle') {
+        if (isMultiplayer) {
+            return <MultiplayerBattle />;
+        }
+        // Proceed to PvE render below...
     }
 
     return (
         <DndContext sensors={sensors} onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
             <motion.div
-                className="game-bg flex flex-col min-h-[100svh] md:h-[100svh] w-full text-white overflow-y-auto overflow-x-hidden md:overflow-hidden items-center justify-between py-2 md:py-4 px-1 md:px-2 relative pb-4 md:pb-10"
+                className="game-bg flex flex-col min-h-[100svh] w-full text-white overflow-x-hidden relative items-center justify-between py-2 md:py-4 px-1 md:px-2 pb-4 md:pb-10"
                 animate={screenShakeEnabled && useGameStore.getState().screenShake ? { x: [-8, 8, -6, 6, -3, 3, 0] } : {}}
                 transition={{ duration: 0.35 }}
             >

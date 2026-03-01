@@ -48,21 +48,26 @@ export const HelpModal: React.FC<HelpModalProps> = ({ show, onClose }) => {
                             </div>
                             <div>
                                 <h4 className="font-bold text-indigo-300 mb-1">{t('help.classesTitle')}</h4>
-                                <ul className="list-disc list-inside space-y-1 text-xs">
-                                    <li><b>Scribe 📜</b> — 5+ letter words: 1.3x DMG + 15 MP</li>
-                                    <li><b>Barbarian 🪓</b> — 3-4 letter words: 1.5x DMG</li>
-                                    <li><b>Rogue 🗡️</b> — 25% crit, rare letters 2x</li>
-                                    <li><b>Cleric ✝️</b> — Heal 6 HP per word</li>
-                                    <li><b>Paladin ⚔️</b> — Light 1.5x, +5 HP/word</li>
-                                    <li><b>Warlock 🔮</b> — Dark 1.5x, +10% DMG→MP</li>
+                                <ul className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-1 text-[10px] md:text-xs">
+                                    <li><b>Scribe 📜</b> — {t('help.class.scribe')}</li>
+                                    <li><b>Barbarian 🪓</b> — {t('help.class.barbarian')}</li>
+                                    <li><b>Rogue 🗡️</b> — {t('help.class.rogue')}</li>
+                                    <li><b>Cleric ✝️</b> — {t('help.class.cleric')}</li>
+                                    <li><b>Paladin ⚔️</b> — {t('help.class.paladin')}</li>
+                                    <li><b>Warlock 🔮</b> — {t('help.class.warlock')}</li>
+                                    <li><b>Ranger 🏹</b> — {t('help.class.ranger')}</li>
+                                    <li><b>Chronomancer ⏳</b> — {t('help.class.chronomancer')}</li>
+                                    <li><b>Necromancer 💀</b> — {t('help.class.necromancer')}</li>
+                                    <li><b>Monk 🧘</b> — {t('help.class.monk')}</li>
                                 </ul>
                             </div>
                             <div>
-                                <h4 className="font-bold text-indigo-300 mb-1">{t('help.tipsTitle')}</h4>
+                                <h4 className="font-bold text-indigo-300 mb-1 text-sm">{t('help.tipsTitle')}</h4>
                                 <ul className="list-disc list-inside text-xs space-y-1">
                                     <li>{t('help.tip1')}</li>
                                     <li>{t('help.tip2')}</li>
                                     <li>{t('help.tip3')}</li>
+                                    <li>{t('help.tipWildcard')}</li>
                                 </ul>
                             </div>
                             <div>

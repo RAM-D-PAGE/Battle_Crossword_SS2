@@ -82,7 +82,7 @@ export const LandingScreen: React.FC<LandingScreenProps> = ({ onNavigate }) => {
                     </div>
 
                     <div className="text-center">
-                        <h2 className="text-3xl font-bold text-indigo-400 mb-3">เกมสวมบทบาท</h2>
+                        <h2 className="text-3xl font-bold text-indigo-400 mb-3">เกม Battle CrossWord</h2>
                         <p className="text-xl text-zinc-300">เกมเต็มรูปแบบ</p>
                         <p className="text-sm text-indigo-500/80 mt-2">เวทย์มนต์ ทักษะ เล่นออนไลน์</p>
                     </div>

@@ -69,7 +69,7 @@ function App() {
 
     const {
         fontSize, highContrast, screenShakeEnabled,
-        showTutorial, setShowTutorial, language, tapToPlace, elderlyMode
+        showTutorial, setShowTutorial, language, tapToPlace
     } = useSettingsStore();
 
     const { timer, message, submitWord, damagePreview, combo } = useGameLoop();
@@ -158,8 +158,7 @@ function App() {
     // ══════════════════════════════════
     // PAGE ROUTER
     // ══════════════════════════════════
-    if (currentPage === 'landing' || (currentPage === 'mainMenu' && gameStatus === 'idle' && !elderlyMode && !useGameStore.getState().turn)) {
-        // Fallback to landing if they somehow reach mainMenu without making a choice, or explicitly on landing
+    if (currentPage === 'landing') {
         return <LandingScreen onNavigate={handleNavigate} />;
     }
 

@@ -123,6 +123,18 @@ type TranslationKeys = {
     'help.keyCast': string;
     'help.keySkill': string;
     'help.keyHelp': string;
+    'help.keySample': string;
+    'help.tipWildcard': string;
+    'help.class.scribe': string;
+    'help.class.barbarian': string;
+    'help.class.rogue': string;
+    'help.class.cleric': string;
+    'help.class.paladin': string;
+    'help.class.warlock': string;
+    'help.class.ranger': string;
+    'help.class.chronomancer': string;
+    'help.class.necromancer': string;
+    'help.class.monk': string;
 
     // Settings
     'settings.title': string;
@@ -175,6 +187,14 @@ type TranslationKeys = {
     'class.paladinDesc': string;
     'class.warlock': string;
     'class.warlockDesc': string;
+    'class.ranger': string;
+    'class.rangerDesc': string;
+    'class.chronomancer': string;
+    'class.chronomancerDesc': string;
+    'class.necromancer': string;
+    'class.necromancerDesc': string;
+    'class.monk': string;
+    'class.monkDesc': string;
 
     // Damage Preview
     'preview.estimated': string;
@@ -302,6 +322,8 @@ const translations: Record<Language, TranslationKeys> = {
         'help.keyCast': 'Cast Spell',
         'help.keySkill': 'Use skill',
         'help.keyHelp': 'Help / Close',
+        'help.keySample': 'Golden letters (J,K,Q,X,Z) give big points!',
+        'help.tipWildcard': 'Wildcard (★) — Can be any letter! Matches any valid word.',
 
         // Settings
         'settings.title': '⚙️ Settings',
@@ -354,6 +376,26 @@ const translations: Record<Language, TranslationKeys> = {
         'class.paladinDesc': 'Holy knight who balances offense and defense.',
         'class.warlock': 'Warlock',
         'class.warlockDesc': 'Dark sorcerer who sacrifices HP for devastating power.',
+        'class.ranger': 'Ranger',
+        'class.rangerDesc': 'Nature hunter who deals bonus damage from vowels.',
+        'class.chronomancer': 'Chronomancer',
+        'class.chronomancerDesc': 'Time mage who reduces cooldowns and extends time.',
+        'class.necromancer': 'Necromancer',
+        'class.necromancerDesc': 'Master of death who thrives on defeating enemies.',
+        'class.monk': 'Monk',
+        'class.monkDesc': 'Balanced fighter with inner peace and steady damage.',
+
+        // Help Class Descriptions (Simplified for UI)
+        'help.class.scribe': '5+ words: 1.3x DMG + 15 MP',
+        'help.class.barbarian': '3-4 words: 1.5x DMG',
+        'help.class.rogue': '25% crit, rare letters 2x',
+        'help.class.cleric': 'Heal 6 HP per word',
+        'help.class.paladin': 'Light 1.5x, +5 HP/word',
+        'help.class.warlock': 'Dark 1.5x, +10% DMG→MP',
+        'help.class.ranger': 'Vowels (A,E,I,O,U): +2 DMG each',
+        'help.class.chronomancer': 'Cooldowns -20%, +5s time',
+        'help.class.necromancer': 'Defeat enemy: +20 HP',
+        'help.class.monk': 'Heal 3/turn, Unique +20%',
 
         // Damage Preview
         'preview.estimated': 'Est.',
@@ -478,7 +520,9 @@ const translations: Record<Language, TranslationKeys> = {
         'help.keyRemove': 'ลบตัวสุดท้าย',
         'help.keyCast': 'ร่ายเวทย์',
         'help.keySkill': 'ใช้สกิล',
+        'help.keySample': 'ตัวอักษรสีทอง (J,K,Q,X,Z) ให้คะแนนมาก!',
         'help.keyHelp': 'ช่วยเหลือ / ปิด',
+        'help.tipWildcard': 'ตัวดาว (★) — เป็นตัวอักษรอะไรก็ได้! ใช้ผสมเป็นคำที่ถูกต้องได้ทุกคำ',
 
         // Settings
         'settings.title': '⚙️ ตั้งค่า',
@@ -531,6 +575,26 @@ const translations: Record<Language, TranslationKeys> = {
         'class.paladinDesc': 'อัศวินศักดิ์สิทธิ์ที่สมดุลระหว่างรุกและรับ',
         'class.warlock': 'นักเวทย์มืด',
         'class.warlockDesc': 'ผู้ใช้เวทย์มืดที่สละ HP เพื่อพลังทำลายล้าง',
+        'class.ranger': 'เรนเจอร์',
+        'class.rangerDesc': 'พรานแห่งธรรมชาติที่ทำดาเมจโบนัสจากสระ (A,E,I,O,U)',
+        'class.chronomancer': 'โครโนแมนเซอร์',
+        'class.chronomancerDesc': 'จอมเวทย์เวลาที่ลดคูลดาวน์สกิลและเพิ่มเวลา',
+        'class.necromancer': 'เนโครแมนเซอร์',
+        'class.necromancerDesc': 'เจ้าแห่งความตายที่ฟื้นฟูพลังเมื่อกำจัดศัตรูได้',
+        'class.monk': 'พระ',
+        'class.monkDesc': 'นักสู้ผู้สงบนิ่งที่รักษาตัวเองและทำดาเมจมั่นคง',
+
+        // Help Class Descriptions (Thai)
+        'help.class.scribe': 'คำ 5+ ตัว: 1.3x ดาเมจ + 15 MP',
+        'help.class.barbarian': 'คำ 3-4 ตัว: 1.5x ดาเมจ',
+        'help.class.rogue': 'คริ 25%, ตัวหายากร x2',
+        'help.class.cleric': 'ฮีล 6 HP ทุกครั้งที่ส่งคำ',
+        'help.class.paladin': 'ธาตุแสง 1.5x, ฮีล 5 HP/คำ',
+        'help.class.warlock': 'ธาตุมืด 1.5x, เปลี่ยนดาเมจ 10% เป็น MP',
+        'help.class.ranger': 'สระ (A,E,I,O,U): +2 ดาเมจต่อตัว',
+        'help.class.chronomancer': 'ลดคูลดาวน์ 20%, เพิ่มเวลา 5 วิ',
+        'help.class.necromancer': 'กำจัดศัตรู: ฟื้นฟู 20 HP',
+        'help.class.monk': 'ฟื้น HP 3/เทิร์น, คำไม่ซ้ำ +20%',
 
         // Damage Preview
         'preview.estimated': 'ประมาณ',

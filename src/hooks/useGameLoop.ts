@@ -78,7 +78,12 @@ export const useGameLoop = () => {
 
     // Enemy Turn Logic — with status effects and special attacks
     useEffect(() => {
-        if (!isPlayerTurn && gameStatus === 'battle' && !isMultiplayer) {
+        if (!isPlayerTurn && gameStatus === 'battle') {
+
+            // In multiplayer, we do NOT run enemy AI. 
+            // We just wait for the opponent's 'word_submit' event to flip `isPlayerTurn` back.
+            if (isMultiplayer) return;
+
             const enemy = enemyRef.current;
             if (!enemy) return;
 

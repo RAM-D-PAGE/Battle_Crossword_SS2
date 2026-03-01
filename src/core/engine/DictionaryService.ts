@@ -90,7 +90,7 @@ export async function isValidWord(word: string): Promise<boolean> {
     // 5) API fallback
     try {
         const response = await fetch(`${API_URL}${encodeURIComponent(lower)}`, {
-            signal: AbortSignal.timeout(3000) // 3 second timeout
+            signal: AbortSignal.timeout(1500) // 1.5 second timeout to prevent game completely hanging
         });
 
         if (response.ok) {

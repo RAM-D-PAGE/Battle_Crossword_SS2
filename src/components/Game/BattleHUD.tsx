@@ -6,6 +6,8 @@ import { useSettingsStore } from '../../store/useSettingsStore';
 import { ENEMIES } from '../../core/data/Enemies';
 import { t } from '../../core/i18n';
 
+import { CLASSES } from '../../core/data/Classes';
+
 const Pct = (cur: number, max: number) => Math.max(0, Math.min(100, (cur / max) * 100));
 
 interface BattleHUDProps {
@@ -21,48 +23,51 @@ export const BattleHUD: React.FC<BattleHUDProps> = ({ timer }) => {
         combo, statusEffects, gameStatus, isMultiplayer, multiplayerOpponentName
     } = useGameStore();
 
-    const { timerEnabled } = useSettingsStore();
+    const { timerEnabled, elderlyMode } = useSettingsStore();
     const currentEnemy = ENEMIES.find(e => e.id === enemyId);
+    // playerClass from store is a string, e.g. "Warrior"
+    const pClassStr = playerClass as unknown as string;
+    const currentClass = CLASSES.find(c => c.id === pClassStr || c.name === pClassStr);
     const isZen = gameStatus === 'zen';
     const displayEnemyName = isMultiplayer ? multiplayerOpponentName : (currentEnemy?.name || 'Unknown');
     const displayEnemyDesc = isMultiplayer ? t('menu.multiplayer') : (currentEnemy?.description || '');
 
     return (
-        <div className="w-full max-w-2xl px-2 flex flex-col gap-3">
+        <div className="w-full max-w-2xl px-1 md:px-2 flex flex-col gap-1 md:gap-3">
             {/* Enemy HUD or Zen Header */}
             {isZen ? (
-                <div className="glass-card rounded-2xl p-4 text-center">
-                    <div className="flex items-center justify-center gap-3">
-                        <span className="text-3xl">🧘</span>
+                <div className="glass-card rounded-xl md:rounded-2xl p-2 md:p-4 text-center">
+                    <div className="flex items-center justify-center gap-2 md:gap-3">
+                        <span className="text-2xl md:text-3xl">🧘</span>
                         <div>
-                            <span className="font-bold text-lg text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-cyan-400">
+                            <span className="font-bold text-base md:text-lg text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-cyan-400">
                                 Zen Mode
                             </span>
-                            <p className="text-[10px] text-zinc-500">ฝึกสมอง สะกดคำอย่างอิสระ</p>
+                            <p className="text-[9px] md:text-[10px] text-zinc-500">ฝึกสมอง สะกดคำอย่างอิสระ</p>
                         </div>
                     </div>
-                    <div className="mt-2 text-2xl font-black text-amber-400 font-mono">{score} pts</div>
+                    <div className="mt-1 md:mt-2 text-xl md:text-2xl font-black text-amber-400 font-mono">{score} pts</div>
                 </div>
             ) : (
-                <div className="glass-card rounded-2xl p-4">
-                    <div className="flex justify-between items-center mb-2">
+                <div className="glass-card rounded-xl md:rounded-2xl p-2 md:p-4">
+                    <div className="flex justify-between items-center mb-1.5 md:mb-2">
                         <div className="flex items-center gap-2">
-                            <div className="w-8 h-8 rounded-lg bg-red-500/20 flex items-center justify-center">
-                                <Skull size={18} className="text-red-400" />
+                            <div className="w-6 h-6 md:w-8 md:h-8 rounded-lg bg-red-500/20 flex items-center justify-center">
+                                <Skull size={14} className="text-red-400 md:w-[18px] md:h-[18px]" />
                             </div>
                             <div>
-                                <div className="flex items-center gap-2">
-                                    {!isMultiplayer && <span className="text-xs font-mono text-zinc-500 bg-zinc-800/80 px-2 py-0.5 rounded">{t('menu.level')}{currentLevel}</span>}
-                                    <span className="font-bold text-lg text-white">{displayEnemyName}</span>
+                                <div className="flex items-center gap-1.5 md:gap-2">
+                                    {!isMultiplayer && <span className="text-[10px] md:text-xs font-mono text-zinc-500 bg-zinc-800/80 px-1.5 md:px-2 py-0 md:py-0.5 rounded">{t('menu.level')}{currentLevel}</span>}
+                                    <span className="font-bold text-sm md:text-lg text-white">{displayEnemyName}</span>
                                 </div>
-                                <p className="text-[10px] text-zinc-500 -mt-0.5">{displayEnemyDesc}</p>
+                                <p className="text-[9px] md:text-[10px] text-zinc-500 leading-tight md:-mt-0.5 max-w-[120px] md:max-w-none truncate">{displayEnemyDesc}</p>
                             </div>
                         </div>
-                        <span className="font-mono text-sm text-red-300 bg-red-500/10 px-3 py-1 rounded-lg">
+                        <span className="font-mono text-[10px] md:text-sm text-red-300 bg-red-500/10 px-2 md:px-3 py-0.5 md:py-1 rounded-lg">
                             {enemyHp}/{enemyMaxHp}
                         </span>
                     </div>
-                    <div className="w-full h-4 bar-track rounded-full overflow-hidden">
+                    <div className="w-full h-1.5 md:h-4 bar-track rounded-full overflow-hidden">
                         <motion.div
                             className="h-full bar-hp-fill rounded-full"
                             animate={{ width: `${Pct(enemyHp, enemyMaxHp)}%` }}
@@ -78,20 +83,21 @@ export const BattleHUD: React.FC<BattleHUDProps> = ({ timer }) => {
                     animate={{ scale: isPlayerTurn ? [1, 1.02, 1] : 1 }}
                     transition={{ duration: 1, repeat: isPlayerTurn ? Infinity : 0 }}
                     className={`
-                        flex items-center gap-2 px-5 py-1.5 rounded-full font-mono font-bold text-sm border transition-all
+                        flex items-center gap-1.5 md:gap-2 px-3 md:px-5 py-1 md:py-1.5 rounded-full font-mono font-bold text-[10px] md:text-sm border transition-all
                         ${isPlayerTurn
                             ? 'bg-indigo-500/20 border-indigo-400/50 text-indigo-300 shadow-[0_0_15px_rgba(99,102,241,0.2)]'
                             : 'bg-red-500/20 border-red-400/50 text-red-300 shadow-[0_0_15px_rgba(239,68,68,0.2)]'}
                     `}
                 >
-                    {isPlayerTurn ? <Shield size={14} /> : <Swords size={14} />}
+                    {isPlayerTurn ? <Shield size={12} className="md:w-3.5 md:h-3.5" /> : <Swords size={12} className="md:w-3.5 md:h-3.5" />}
                     {isPlayerTurn ? t('battle.yourTurn') : t('battle.enemyTurn')}
                 </motion.div>
-                {timerEnabled && (
-                    <div className={`flex items-center gap-1.5 px-4 py-1.5 rounded-full font-mono text-sm border transition-all
-                        ${timer <= 10 ? 'bg-red-500/20 border-red-500/50 text-red-300 animate-pulse' : 'bg-zinc-800/50 border-zinc-700/50 text-zinc-400'}
-                    `}>
-                        <Timer size={14} /> {timer}s
+                {timerEnabled && !elderlyMode && (
+                    <div className="flex items-center gap-1 md:gap-2 px-3 md:px-5 py-1 md:py-1.5 rounded-full bg-zinc-800/80 border border-zinc-700 font-mono text-[10px] md:text-sm">
+                        <Timer size={12} className="text-zinc-400 md:w-3.5 md:h-3.5" />
+                        <span className={timer <= 10 ? 'text-red-400 animate-pulse' : 'text-zinc-300'}>
+                            {timer}s
+                        </span>
                     </div>
                 )}
             </div>
@@ -119,63 +125,78 @@ export const BattleHUD: React.FC<BattleHUDProps> = ({ timer }) => {
                 </div>
             )}
 
-            {/* Player HUD */}
-            <div className="w-full glass-card rounded-2xl p-3 flex flex-col gap-2">
-                <div className="flex justify-between items-center">
+            {/* Player Info (Simplified & Space Efficient) */}
+            <div className="glass-card rounded-xl md:rounded-2xl p-2 md:p-4">
+                <div className="flex justify-between items-center mb-2 md:mb-3">
                     <div className="flex items-center gap-2">
-                        <span className="text-lg">{playerClass?.icon || '⚔️'}</span>
-                        <span className="font-bold text-sm text-white">{playerClass?.name || 'Unknown'}</span>
-                        <span className="text-[10px] font-mono text-indigo-300 bg-indigo-500/20 px-1.5 rounded">Lv.{playerLevel}</span>
+                        {/* Class Icon */}
+                        <div className="w-6 h-6 md:w-8 md:h-8 rounded-lg bg-indigo-500/20 flex items-center justify-center text-lg md:text-xl">
+                            {currentClass?.icon || '⚔️'}
+                        </div>
+                        <div>
+                            <div className="flex items-center gap-1.5 md:gap-2">
+                                <span className="font-black text-sm md:text-lg text-white">{(currentClass?.name as string) || pClassStr}</span>
+                                <span className="text-[10px] md:text-xs font-mono text-indigo-300 bg-indigo-500/20 px-1.5 md:px-2 py-0 md:py-0.5 rounded">
+                                    Lv.{playerLevel}
+                                </span>
+                            </div>
+                        </div>
                     </div>
-                    <div className="flex items-center gap-2">
-                        <span className="font-mono text-xs text-yellow-300">💰 {gold}</span>
-                        <span className="font-mono text-xs text-zinc-500">🏆 {score}</span>
+
+                    {/* Meta Info */}
+                    <div className="flex gap-2 min-[400px]:gap-3 text-[10px] md:text-sm font-mono text-zinc-400">
+                        <span className="flex items-center gap-1">💰 <span className="text-yellow-400">{gold}</span></span>
+                        <span className="flex items-center gap-1">🏆 <span className="text-amber-400">{score}</span></span>
                     </div>
                 </div>
 
-                {/* HP Bar */}
-                <div>
-                    <div className="flex justify-between text-[10px] font-bold uppercase tracking-wider text-blue-300 mb-0.5">
-                        <span>HP</span>
-                        <span className="font-mono">{playerHp}/{playerMaxHp}</span>
+                <div className="space-y-1.5 md:space-y-2">
+                    {/* HP Bar */}
+                    <div className="flex justify-between text-[9px] md:text-xs font-bold mb-0.5 md:mb-1">
+                        <span className="text-cyan-400">HP</span>
+                        <span className="font-mono text-cyan-200">{playerHp}/{playerMaxHp}</span>
                     </div>
-                    <div className="w-full h-3 bar-track rounded-full overflow-hidden">
+                    <div className="w-full h-1.5 md:h-2.5 bar-track rounded-full overflow-hidden">
                         <motion.div
-                            className="h-full bar-player-hp-fill rounded-full"
+                            className="h-full bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full"
                             animate={{ width: `${Pct(playerHp, playerMaxHp)}%` }}
-                            transition={{ type: 'spring', stiffness: 60 }}
+                            transition={{ type: 'spring', stiffness: 60, damping: 15 }}
                         />
                     </div>
-                </div>
 
-                {/* MP Bar */}
-                <div>
-                    <div className="flex justify-between text-[10px] font-bold uppercase tracking-wider text-purple-300 mb-0.5">
-                        <span>MP</span>
-                        <span className="font-mono">{playerMp}/{playerMaxMp}</span>
-                    </div>
-                    <div className="w-full h-2 bar-track rounded-full overflow-hidden">
-                        <motion.div
-                            className="h-full bar-mp-fill rounded-full"
-                            animate={{ width: `${Pct(playerMp, playerMaxMp)}%` }}
-                            transition={{ type: 'spring', stiffness: 60 }}
-                        />
-                    </div>
-                </div>
+                    {/* MP Bar */}
+                    {!elderlyMode && (
+                        <>
+                            <div className="flex justify-between text-[9px] md:text-xs font-bold mb-0.5 md:mb-1">
+                                <span className="text-purple-400">MP</span>
+                                <span className="font-mono text-purple-200">{playerMp}/{playerMaxMp}</span>
+                            </div>
+                            <div className="w-full h-1.5 md:h-2.5 bar-track rounded-full overflow-hidden">
+                                <motion.div
+                                    className="h-full bg-gradient-to-r from-purple-500 to-fuchsia-500 rounded-full"
+                                    animate={{ width: `${Pct(playerMp, playerMaxMp)}%` }}
+                                    transition={{ type: 'spring', stiffness: 60, damping: 15 }}
+                                />
+                            </div>
+                        </>
+                    )}
 
-                {/* XP Bar */}
-                <div>
-                    <div className="flex justify-between text-[10px] font-bold uppercase tracking-wider text-yellow-300 mb-0.5">
-                        <span>XP</span>
-                        <span className="font-mono">{playerXp}/{xpToNextLevel}</span>
-                    </div>
-                    <div className="w-full h-1.5 bar-track rounded-full overflow-hidden">
-                        <motion.div
-                            className="h-full bg-gradient-to-r from-yellow-500 to-amber-400 rounded-full"
-                            animate={{ width: `${Pct(playerXp, xpToNextLevel)}%` }}
-                            transition={{ type: 'spring', stiffness: 60 }}
-                        />
-                    </div>
+                    {/* XP Bar */}
+                    {!elderlyMode && (
+                        <>
+                            <div className="flex justify-between text-[9px] md:text-xs font-bold mb-0.5 md:mb-1">
+                                <span className="text-amber-400">XP</span>
+                                <span className="font-mono text-amber-200">{playerXp}/{xpToNextLevel}</span>
+                            </div>
+                            <div className="w-full h-1.5 md:h-2.5 bar-track rounded-full overflow-hidden">
+                                <motion.div
+                                    className="h-full bg-gradient-to-r from-amber-500 to-yellow-500 rounded-full"
+                                    animate={{ width: `${(playerXp / xpToNextLevel) * 100}%` }}
+                                    transition={{ type: 'spring', stiffness: 60, damping: 15 }}
+                                />
+                            </div>
+                        </>
+                    )}
                 </div>
             </div>
         </div>

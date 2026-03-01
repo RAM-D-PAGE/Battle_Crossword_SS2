@@ -2,6 +2,7 @@ import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
 import { useSettingsStore, FontSize, Difficulty } from '../../store/useSettingsStore';
+import { useGameStore } from '../../store/useGameStore';
 import { t } from '../../core/i18n';
 
 interface SettingsModalProps {
@@ -131,6 +132,32 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ show, onClose }) =
                                             transition={{ type: 'spring', stiffness: 500, damping: 30 }}
                                         />
                                     </button>
+                                </div>
+
+                                {/* Full Game Mode (Inverted Elderly Mode) */}
+                                <div className="pt-2 border-t border-zinc-800">
+                                    <div className="flex justify-between items-center mb-1">
+                                        <span className="text-sm font-bold text-zinc-300">{t('settings.elderlyMode')}</span>
+                                        <button
+                                            onClick={() => {
+                                                if (settings.elderlyMode) {
+                                                    settings.disableElderlyMode();
+                                                    useGameStore.getState().resetGame();
+                                                    onClose();
+                                                } else {
+                                                    settings.enableElderlyMode();
+                                                }
+                                            }}
+                                            className={`w-14 h-8 rounded-full transition-all relative ${!settings.elderlyMode ? 'bg-indigo-500' : 'bg-zinc-700'}`}
+                                        >
+                                            <motion.div
+                                                className="w-6 h-6 bg-white rounded-full absolute top-1"
+                                                animate={{ left: !settings.elderlyMode ? '1.75rem' : '0.25rem' }}
+                                                transition={{ type: 'spring', stiffness: 500, damping: 30 }}
+                                            />
+                                        </button>
+                                    </div>
+                                    <p className="text-[10px] text-zinc-500">{t('settings.elderlyModeDesc')}</p>
                                 </div>
 
                                 {/* Tap to Place */}

@@ -32,7 +32,9 @@ import { SkillShop } from './components/Pages/SkillShop';
 import { Inventory } from './components/Pages/Inventory';
 import WorldMap from './components/Pages/WorldMap';
 import { MultiplayerSync } from './components/Game/MultiplayerSync';
+import { MultiplayerBattle } from './components/Game/MultiplayerBattle';
 import AchievementsPage from './components/Pages/AchievementsPage';
+import { LandingScreen } from './components/Pages/LandingScreen';
 
 import { useGameStore } from './store/useGameStore';
 import { useSettingsStore, FONT_SIZE_CONFIG } from './store/useSettingsStore';
@@ -43,10 +45,10 @@ import { HelpCircle, Flag, Settings, Lightbulb } from 'lucide-react';
 import { setLanguage, t } from './core/i18n';
 import { findHints } from './core/engine/HintSystem';
 
-type AppPage = 'mainMenu' | 'classSelect' | 'multiplayer' | 'bestiary' | 'leaderboard' | 'shop' | 'inventory' | 'battle' | 'worldMap' | 'achievements';
+type AppPage = 'landing' | 'mainMenu' | 'classSelect' | 'multiplayer' | 'bestiary' | 'leaderboard' | 'shop' | 'inventory' | 'battle' | 'worldMap' | 'achievements';
 
 function App() {
-    const [currentPage, setCurrentPage] = useState<AppPage>('mainMenu');
+    const [currentPage, setCurrentPage] = useState<AppPage>('landing');
     const [activeTile, setActiveTile] = useState<TileData | null>(null);
     const [showHelp, setShowHelp] = useState(false);
     const [showSettings, setShowSettings] = useState(false);
@@ -67,7 +69,7 @@ function App() {
 
     const {
         fontSize, highContrast, screenShakeEnabled,
-        showTutorial, setShowTutorial, language, tapToPlace
+        showTutorial, setShowTutorial, language, tapToPlace, elderlyMode
     } = useSettingsStore();
 
     const { timer, message, submitWord, damagePreview, combo } = useGameLoop();
@@ -136,12 +138,17 @@ function App() {
     };
 
     const handleBack = () => {
-        setCurrentPage('mainMenu');
+        setCurrentPage('landing');
     };
 
     // ══════════════════════════════════
     // PAGE ROUTER
     // ══════════════════════════════════
+    if (currentPage === 'landing' || (currentPage === 'mainMenu' && gameStatus === 'idle' && !elderlyMode && !useGameStore.getState().turn)) {
+        // Fallback to landing if they somehow reach mainMenu without making a choice, or explicitly on landing
+        return <LandingScreen onNavigate={handleNavigate} />;
+    }
+
     if (currentPage === 'mainMenu' && gameStatus === 'idle') {
         return <MainMenu onNavigate={handleNavigate} />;
     }
@@ -232,10 +239,14 @@ function App() {
     // ══════════════════════════════════
     // BATTLE SCREEN
     // ══════════════════════════════════
+    if (useGameStore.getState().isMultiplayer && gameStatus === 'battle') {
+        return <MultiplayerBattle />;
+    }
+
     return (
         <DndContext sensors={sensors} onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
             <motion.div
-                className="game-bg flex flex-col min-h-[100svh] md:h-[100svh] w-full text-white overflow-y-auto overflow-x-hidden md:overflow-hidden items-center justify-between py-4 px-2 relative pb-10"
+                className="game-bg flex flex-col min-h-[100svh] md:h-[100svh] w-full text-white overflow-y-auto overflow-x-hidden md:overflow-hidden items-center justify-between py-2 md:py-4 px-1 md:px-2 relative pb-4 md:pb-10"
                 animate={screenShakeEnabled && useGameStore.getState().screenShake ? { x: [-8, 8, -6, 6, -3, 3, 0] } : {}}
                 transition={{ duration: 0.35 }}
             >
@@ -266,7 +277,7 @@ function App() {
                             initial={{ opacity: 0, y: -20 }}
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: -20 }}
-                            className="absolute top-20 left-1/2 -translate-x-1/2 z-50 px-6 py-2 rounded-xl bg-indigo-900/80 backdrop-blur-md border border-indigo-400/30 text-indigo-200 font-mono text-sm"
+                            className="absolute top-16 md:top-20 left-1/2 -translate-x-1/2 z-50 px-4 md:px-6 py-2 rounded-xl bg-indigo-900/80 backdrop-blur-md border border-indigo-400/30 text-indigo-200 font-mono text-sm"
                         >
                             💡 {hintText}
                         </motion.div>
@@ -313,13 +324,13 @@ function App() {
                 {/* ══════════════════════════════════ */}
                 {/* MIDDLE: Grid                       */}
                 {/* ══════════════════════════════════ */}
-                <div className="flex-1 flex flex-col items-center justify-center w-full relative">
+                <div className="flex-1 flex flex-col items-center justify-center w-full relative py-1 md:py-0">
                     {/* Damage Preview */}
                     {damagePreview > 0 && (
                         <motion.div
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
-                            className="mb-2 px-4 py-1 rounded-full bg-yellow-500/10 border border-yellow-500/20 text-yellow-300 text-xs font-mono"
+                            className="mb-1 md:mb-2 px-3 md:px-4 py-0.5 md:py-1 rounded-full bg-yellow-500/10 border border-yellow-500/20 text-yellow-300 text-[10px] md:text-xs font-mono"
                         >
                             {t('preview.estimated')} ~{damagePreview} {t('preview.damage')}
                         </motion.div>
@@ -330,41 +341,41 @@ function App() {
                 {/* ══════════════════════════════════ */}
                 {/* BOTTOM: Player Area                */}
                 {/* ══════════════════════════════════ */}
-                <div className="w-full max-w-2xl px-2 flex flex-col items-center gap-3 pb-2">
+                <div className="w-full max-w-2xl px-1 md:px-2 flex flex-col items-center gap-1.5 md:gap-3 pb-1 md:pb-2">
                     <Skills />
                     <Hand />
 
                     {/* Action Buttons */}
-                    <div className="flex gap-2 w-full">
+                    <div className="flex gap-1.5 md:gap-2 w-full mt-1">
                         <button
                             onClick={() => { if (confirm(t('battle.surrenderConfirm'))) resetGame(); }}
-                            className="px-3 py-3.5 glass-card rounded-xl text-red-400 hover:text-red-300 hover:border-red-500/40 transition-all active:scale-95 flex items-center gap-1"
+                            className="px-3 py-2.5 md:py-3.5 glass-card rounded-xl text-red-400 hover:text-red-300 hover:border-red-500/40 transition-all active:scale-95 flex items-center gap-1"
                             title={t('battle.surrender')}
                         >
-                            <Flag size={16} />
+                            <Flag size={14} className="md:w-4 md:h-4" />
                         </button>
                         <button
                             onClick={submitWord}
                             disabled={!isPlayerTurn}
-                            className="flex-1 py-3.5 rounded-xl font-bold text-base uppercase tracking-widest btn-cast"
+                            className="flex-1 py-2.5 md:py-3.5 rounded-xl font-bold text-sm md:text-base uppercase tracking-widest btn-cast"
                         >
                             {t('battle.castSpell')}
-                            <span className="text-[9px] opacity-50 ml-2 normal-case tracking-normal">[Enter]</span>
+                            <span className="text-[9px] opacity-50 ml-1 md:ml-2 normal-case tracking-normal hidden min-[400px]:inline">[Enter]</span>
                         </button>
                         <button
                             onClick={handleHint}
                             disabled={!isPlayerTurn}
-                            className="px-3 py-3.5 glass-card rounded-xl text-yellow-400 hover:text-yellow-300 hover:border-yellow-500/40 transition-all active:scale-95"
+                            className="px-3 py-2.5 md:py-3.5 glass-card rounded-xl text-yellow-400 hover:text-yellow-300 hover:border-yellow-500/40 transition-all active:scale-95"
                             title={t('battle.hint')}
                         >
-                            <Lightbulb size={16} />
+                            <Lightbulb size={14} className="md:w-4 md:h-4" />
                         </button>
                         <button
                             onClick={() => setShowHelp(true)}
-                            className="px-3 py-3.5 glass-card rounded-xl text-blue-400 hover:text-blue-300 hover:border-blue-500/40 transition-all active:scale-95"
+                            className="px-3 py-2.5 md:py-3.5 glass-card rounded-xl text-blue-400 hover:text-blue-300 hover:border-blue-500/40 transition-all active:scale-95"
                             title={`${t('battle.help')} [Esc]`}
                         >
-                            <HelpCircle size={16} />
+                            <HelpCircle size={14} className="md:w-4 md:h-4" />
                         </button>
                     </div>
 

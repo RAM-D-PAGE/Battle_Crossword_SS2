@@ -65,7 +65,7 @@ export const Grid: React.FC = () => {
         <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="flex flex-wrap md:flex-nowrap justify-center gap-1.5 md:gap-2 p-3 md:p-5 glass-card rounded-2xl max-w-[240px] min-[400px]:max-w-[280px] md:max-w-none mx-auto"
+            className="flex justify-center gap-1 min-[400px]:gap-1.5 md:gap-2 p-2 min-[400px]:p-3 md:p-5 glass-card rounded-2xl w-full max-w-full overflow-x-auto overflow-y-hidden hide-scrollbar"
         >
             {grid.map((tileData, index) => (
                 <GridSlot

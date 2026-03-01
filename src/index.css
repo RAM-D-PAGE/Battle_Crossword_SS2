@@ -19,7 +19,7 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  /* Default sizes (normal) */
+  /* Default sizes (normal mobile) */
   --font-xs: 9px;
   --font-sm: 12px;
   --font-base: 14px;
@@ -27,12 +27,31 @@
   --font-xl: 20px;
   --font-2xl: 24px;
   --font-3xl: 30px;
-  --tile-size: 56px;
+  
+  --tile-size: 44px;
+  --slot-size: 44px;
+  --skill-size: 48px;
+
+  /* Desktop/Tablet sizes */
   --tile-size-md: 64px;
-  --slot-size: 56px;
   --slot-size-md: 72px;
-  --skill-size: 56px;
   --skill-size-md: 64px;
+}
+
+@media (min-width: 400px) {
+  :root {
+    --tile-size: 52px;
+    --slot-size: 52px;
+    --skill-size: 56px;
+  }
+}
+
+@media (max-width: 350px) {
+  :root {
+    --tile-size: 38px;
+    --slot-size: 38px;
+    --skill-size: 42px;
+  }
 }
 
 body {

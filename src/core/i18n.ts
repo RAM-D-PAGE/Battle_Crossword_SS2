@@ -139,6 +139,8 @@ type TranslationKeys = {
     'settings.hard': string;
     'settings.language': string;
     'settings.highContrast': string;
+    'settings.elderlyMode': string;
+    'settings.elderlyModeDesc': string;
     'settings.tapToPlace': string;
     'settings.screenShake': string;
     'settings.autoSort': string;
@@ -316,6 +318,8 @@ const translations: Record<Language, TranslationKeys> = {
         'settings.hard': 'Hard',
         'settings.language': 'Language',
         'settings.highContrast': 'High Contrast',
+        'settings.elderlyMode': 'Full Game Mode',
+        'settings.elderlyModeDesc': 'Enables timers, MP/XP displays, and standard challenges.',
         'settings.tapToPlace': 'Tap to Place',
         'settings.screenShake': 'Screen Shake',
         'settings.autoSort': 'Auto-Sort Hand',
@@ -491,6 +495,8 @@ const translations: Record<Language, TranslationKeys> = {
         'settings.hard': 'ยาก',
         'settings.language': 'ภาษา',
         'settings.highContrast': 'ความเปรียบต่างสูง',
+        'settings.elderlyMode': 'เกมเต็มรูปแบบ (Full Game)',
+        'settings.elderlyModeDesc': 'เปิดระบบจำกัดเวลา และแสดงเกจ MP/XP ครบถ้วน',
         'settings.tapToPlace': 'แตะเพื่อวาง',
         'settings.screenShake': 'สั่นหน้าจอ',
         'settings.autoSort': 'เรียงอัตโนมัติ',

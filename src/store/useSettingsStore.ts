@@ -128,7 +128,7 @@ export const useSettingsStore = create<SettingsState>()(
             screenShakeEnabled: true,
             autoSort: false,
             showTutorial: true,
-            elderlyMode: false,
+            elderlyMode: true, // Default to true for Elderly-First experience
 
             setFontSize: (size) => set({ fontSize: size }),
             setTimerEnabled: (enabled) => set({ timerEnabled: enabled }),

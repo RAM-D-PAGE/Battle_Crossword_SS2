@@ -18,6 +18,7 @@ export const useGameLoop = () => {
         healPlayer,
         enemyId,
         gameStatus,
+        isMultiplayer,
         grid,
         setGrid,
         refillHand,
@@ -77,7 +78,7 @@ export const useGameLoop = () => {
 
     // Enemy Turn Logic — with status effects and special attacks
     useEffect(() => {
-        if (!isPlayerTurn && gameStatus === 'battle') {
+        if (!isPlayerTurn && gameStatus === 'battle' && !isMultiplayer) {
             const enemy = enemyRef.current;
             if (!enemy) return;
 
@@ -125,7 +126,7 @@ export const useGameLoop = () => {
 
             return () => clearTimeout(attackDelay);
         }
-    }, [isPlayerTurn, gameStatus, damagePlayer, endTurn, triggerShake, addPopup, diffConfig.enemyDamageMultiplier, screenShakeEnabled, diffConfig.timerDuration, tickStatusEffects, applyStatusEffect]);
+    }, [isPlayerTurn, gameStatus, isMultiplayer, damagePlayer, endTurn, triggerShake, addPopup, diffConfig.enemyDamageMultiplier, screenShakeEnabled, diffConfig.timerDuration, tickStatusEffects, applyStatusEffect]);
 
     // Game Over Audio
     useEffect(() => {
@@ -221,6 +222,15 @@ export const useGameLoop = () => {
             setMessage(msg);
 
             damageEnemy(totalDamage);
+
+            if (isMultiplayer) {
+                const { submitWord: mpSubmit, updatePlayerHp } = await import('../core/services/MultiplayerService');
+                const store = useGameStore.getState();
+                if (store.multiplayerRoomId) {
+                    mpSubmit(store.multiplayerRoomId, word, totalDamage, store.score);
+                    updatePlayerHp(store.multiplayerRoomId, store.playerHp, store.score);
+                }
+            }
 
             // Apply MP gain
             if (mpGain > 0) {

@@ -51,6 +51,11 @@ interface GameState {
     equippedWeapon: string | null;
     passiveSkills: string[];   // Passive skill slots (max 3)
 
+    // Multiplayer
+    isMultiplayer: boolean;
+    multiplayerRoomId: string | null;
+    multiplayerOpponentName: string;
+
     // Progression
     currentLevel: number;
     currentEnemyIndex: number;
@@ -70,6 +75,7 @@ interface GameState {
 
     startBattle: (enemyId: string) => void;
     startZenMode: () => void;
+    startMultiplayerBattle: (roomId: string, hostGoesFirst: boolean, myHp: number, opponentHp: number, opponentName: string) => void;
     endTurn: () => void;
     damageEnemy: (amount: number) => void;
     damagePlayer: (amount: number) => void;
@@ -134,6 +140,9 @@ export const useGameStore = create<GameState>()(
             hand: TileSystem.fillHand([], 7, 2),
             grid: Array(7).fill(null),
             score: 0,
+            isMultiplayer: false,
+            multiplayerRoomId: null,
+            multiplayerOpponentName: '',
 
             // Battle Defaults
             playerHp: 100,
@@ -269,6 +278,30 @@ export const useGameStore = create<GameState>()(
                     score: 0,
                     combo: 0,
                     discardsRemaining: 99,
+                    statusEffects: [],
+                });
+            },
+
+            // ═══ MULTIPLAYER BATTLE ═══
+            startMultiplayerBattle: (roomId: string, hostGoesFirst: boolean, myHp: number, opponentHp: number, opponentName: string) => {
+                set({
+                    gameStatus: 'battle',
+                    isMultiplayer: true,
+                    multiplayerRoomId: roomId,
+                    multiplayerOpponentName: opponentName,
+                    playerHp: myHp,
+                    playerMaxHp: myHp,
+                    playerMp: 50,
+                    playerMaxMp: 100,
+                    enemyId: 'player', // Fake ID for opponent
+                    enemyHp: opponentHp,
+                    enemyMaxHp: opponentHp,
+                    turn: 1,
+                    isPlayerTurn: hostGoesFirst,
+                    hand: TileSystem.fillHand([], 7, 2),
+                    grid: Array(7).fill(null),
+                    score: 0,
+                    combo: 0,
                     statusEffects: [],
                 });
             },

@@ -40,7 +40,7 @@ export const Tutorial: React.FC<TutorialProps> = ({ step, onNext, onSkip, totalS
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: -20, scale: 0.9 }}
                     transition={{ type: 'spring', stiffness: 300, damping: 25 }}
-                    className="absolute bottom-8 left-1/2 -translate-x-1/2 w-[90%] max-w-md pointer-events-auto"
+                    className="absolute bottom-8 left-4 right-4 mx-auto w-auto max-w-md pointer-events-auto"
                 >
                     <div className="glass-card rounded-2xl p-6 border-indigo-500/30 border-2 shadow-[0_0_40px_rgba(99,102,241,0.2)]">
                         {/* Step indicator */}

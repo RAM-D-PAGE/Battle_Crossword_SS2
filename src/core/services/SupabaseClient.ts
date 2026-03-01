@@ -23,6 +23,7 @@ export interface Room {
 export interface Player {
     id: string;
     room_id: string;
+    player_id: string;
     player_name: string;
     player_class: string;
     hp: number;

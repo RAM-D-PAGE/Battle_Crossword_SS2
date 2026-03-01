@@ -124,7 +124,7 @@ export const useSettingsStore = create<SettingsState>()(
             difficulty: 'normal',
             language: 'th',
             highContrast: false,
-            tapToPlace: false,
+            tapToPlace: true,
             screenShakeEnabled: true,
             autoSort: false,
             showTutorial: true,

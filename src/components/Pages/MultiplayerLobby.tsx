@@ -5,15 +5,17 @@ import { t } from '../../core/i18n';
 import {
     createRoom, fetchRooms, joinRoom, leaveRoom,
     getPlayersInRoom, setReady, startGame, setPlayerName,
-    getPlayerName, subscribeToRoom, subscribeToRoomList, unsubscribe
+    getPlayerName, subscribeToRoom, subscribeToRoomList, unsubscribe, getPlayerId
 } from '../../core/services/MultiplayerService';
 import { Room, Player } from '../../core/services/SupabaseClient';
+import { useGameStore } from '../../store/useGameStore';
 
 interface MultiplayerLobbyProps {
     onBack: () => void;
+    onStartBattle: () => void;
 }
 
-export const MultiplayerLobby: React.FC<MultiplayerLobbyProps> = ({ onBack }) => {
+export const MultiplayerLobby: React.FC<MultiplayerLobbyProps> = ({ onBack, onStartBattle }) => {
     const [tab, setTab] = useState<'rooms' | 'create' | 'lobby'>('rooms');
     const [rooms, setRooms] = useState<Room[]>([]);
     const [loading, setLoading] = useState(true);
@@ -48,7 +50,23 @@ export const MultiplayerLobby: React.FC<MultiplayerLobbyProps> = ({ onBack }) =>
                 setCurrentRoom(room);
                 if (room.status === 'playing') {
                     // Game started! Navigate to battle
-                    alert('Game starting! 🎮'); // TODO: navigate to multiplayer battle
+                    const myId = getPlayerId();
+                    const me = players.find(p => p.player_id === myId);
+                    const opponent = players.find(p => p.player_id !== myId);
+
+                    if (me && opponent) {
+                        useGameStore.getState().startMultiplayerBattle(
+                            room.id,
+                            me.is_host, // Host goes first
+                            me.hp,
+                            opponent.hp,
+                            opponent.player_name
+                        );
+                        onStartBattle();
+                    } else {
+                        // If players haven't synced yet, retry after a tiny delay
+                        setTimeout(() => onStartBattle(), 500);
+                    }
                 }
             }
         });
@@ -177,8 +195,8 @@ export const MultiplayerLobby: React.FC<MultiplayerLobbyProps> = ({ onBack }) =>
                                         <span className="text-[10px] text-zinc-500 uppercase">{p.player_class}</span>
                                     </div>
                                     <span className={`text-xs font-bold px-2 py-0.5 rounded-full ${p.is_ready ? 'bg-emerald-500/20 text-emerald-300' :
-                                            p.is_host ? 'bg-yellow-500/20 text-yellow-300' :
-                                                'bg-zinc-700 text-zinc-400'
+                                        p.is_host ? 'bg-yellow-500/20 text-yellow-300' :
+                                            'bg-zinc-700 text-zinc-400'
                                         }`}>
                                         {p.is_host ? '👑 Host' : p.is_ready ? '✅ Ready' : '⏳ Waiting'}
                                     </span>

@@ -18,12 +18,14 @@ export const BattleHUD: React.FC<BattleHUDProps> = ({ timer }) => {
         enemyHp, enemyMaxHp, enemyId,
         isPlayerTurn, playerClass, score, currentLevel,
         gold, playerLevel, playerXp, xpToNextLevel,
-        combo, statusEffects, gameStatus
+        combo, statusEffects, gameStatus, isMultiplayer, multiplayerOpponentName
     } = useGameStore();
 
     const { timerEnabled } = useSettingsStore();
     const currentEnemy = ENEMIES.find(e => e.id === enemyId);
     const isZen = gameStatus === 'zen';
+    const displayEnemyName = isMultiplayer ? multiplayerOpponentName : (currentEnemy?.name || 'Unknown');
+    const displayEnemyDesc = isMultiplayer ? t('menu.multiplayer') : (currentEnemy?.description || '');
 
     return (
         <div className="w-full max-w-2xl px-2 flex flex-col gap-3">
@@ -50,10 +52,10 @@ export const BattleHUD: React.FC<BattleHUDProps> = ({ timer }) => {
                             </div>
                             <div>
                                 <div className="flex items-center gap-2">
-                                    <span className="text-xs font-mono text-zinc-500 bg-zinc-800/80 px-2 py-0.5 rounded">{t('menu.level')}{currentLevel}</span>
-                                    <span className="font-bold text-lg text-white">{currentEnemy?.name || 'Unknown'}</span>
+                                    {!isMultiplayer && <span className="text-xs font-mono text-zinc-500 bg-zinc-800/80 px-2 py-0.5 rounded">{t('menu.level')}{currentLevel}</span>}
+                                    <span className="font-bold text-lg text-white">{displayEnemyName}</span>
                                 </div>
-                                <p className="text-[10px] text-zinc-500 -mt-0.5">{currentEnemy?.description || ''}</p>
+                                <p className="text-[10px] text-zinc-500 -mt-0.5">{displayEnemyDesc}</p>
                             </div>
                         </div>
                         <span className="font-mono text-sm text-red-300 bg-red-500/10 px-3 py-1 rounded-lg">

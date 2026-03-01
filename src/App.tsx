@@ -31,6 +31,7 @@ import { Leaderboard } from './components/Pages/Leaderboard';
 import { SkillShop } from './components/Pages/SkillShop';
 import { Inventory } from './components/Pages/Inventory';
 import WorldMap from './components/Pages/WorldMap';
+import { MultiplayerSync } from './components/Game/MultiplayerSync';
 import AchievementsPage from './components/Pages/AchievementsPage';
 
 import { useGameStore } from './store/useGameStore';
@@ -150,7 +151,7 @@ function App() {
     }
 
     if (currentPage === 'multiplayer') {
-        return <MultiplayerLobby onBack={handleBack} />;
+        return <MultiplayerLobby onBack={handleBack} onStartBattle={() => setCurrentPage('battle')} />;
     }
 
     if (currentPage === 'bestiary') {
@@ -234,7 +235,7 @@ function App() {
     return (
         <DndContext sensors={sensors} onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
             <motion.div
-                className="game-bg flex flex-col h-[100svh] w-full text-white overflow-hidden items-center justify-between py-4 px-2 relative"
+                className="game-bg flex flex-col min-h-[100svh] md:h-[100svh] w-full text-white overflow-y-auto overflow-x-hidden md:overflow-hidden items-center justify-between py-4 px-2 relative pb-10"
                 animate={screenShakeEnabled && useGameStore.getState().screenShake ? { x: [-8, 8, -6, 6, -3, 3, 0] } : {}}
                 transition={{ duration: 0.35 }}
             >
@@ -307,6 +308,7 @@ function App() {
                 {/* TOP: Battle HUD                    */}
                 {/* ══════════════════════════════════ */}
                 <BattleHUD timer={timer} />
+                <MultiplayerSync />
 
                 {/* ══════════════════════════════════ */}
                 {/* MIDDLE: Grid                       */}
